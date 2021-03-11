@@ -1,0 +1,37 @@
+
+message(STATUS "Looking for FreeImage ...")
+
+FIND_PATH(FREEIMAGE_INCLUDE_DIR 
+  NAMES FreeImage.h
+  HINTS ${FREEIMAGE_HOME}
+  PATH_SUFFIXES include
+#  PATHS include
+)
+
+FIND_LIBRARY(FREEIMAGE_LIBRARY_TEMP
+  NAMES FreeImage libfreeimage.a
+  HINTS ${FREEIMAGE_HOME}
+  PATH_SUFFIXES ${FREEIMAGE_LIB_SUFFIXES}
+#  PATHS .
+)
+
+FIND_FILE(FREEIMAGE_BINARY
+  NAMES "FreeImage.dll" "libFreeImageShared.so" "libfreeimage-3.18.0.dylib" "libfreeimage-3.18.0.so"
+  HINTS ${FREEIMAGE_HOME}
+  PATH_SUFFIXES ${FREEIMAGE_LIB_SUFFIXES}
+)
+
+message(STATUS "${FREEIMAGE_INCLUDE_DIR}")
+message(STATUS "${FREEIMAGE_LIBRARY_TEMP}")
+message(STATUS "${FREEIMAGE_BINARY}")
+
+SET(FREEIMAGE_FOUND "NO")
+IF(FREEIMAGE_LIBRARY_TEMP)
+  # Set the final string here so the GUI reflects the final state.
+  SET(FREEIMAGE_LIBRARY ${FREEIMAGE_LIBRARY_TEMP} CACHE STRING "Where the FreeImage Library can be found")
+  # Set the temp variable to INTERNAL so it is not seen in the CMake GUI
+  SET(FREEIMAGE_LIBRARY_TEMP "${FREEIMAGE_LIBRARY_TEMP}" CACHE INTERNAL "")
+
+  SET(FREEIMAGE_FOUND "YES")
+ENDIF(FREEIMAGE_LIBRARY_TEMP)
+
