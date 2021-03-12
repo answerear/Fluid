@@ -14,6 +14,7 @@ endif (MSVC)
 
 # Setup project include files path
 include_directories(
+    "${CMAKE_CURRENT_SOURCE_DIR}/../Platform/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../Fluid/include"
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${SDL2_INCLUDE_DIR}"
@@ -37,6 +38,7 @@ if (FLUID_OS_WINDOWS)
     target_link_libraries(
         ${LIB_NAME}
         Fluid
+        Platform
         )
     
     # Setup install files and path for Windows.
@@ -52,6 +54,7 @@ elseif (FLUID_OS_ANDROID)
     target_link_libraries(
         ${LIB_NAME}
         Fluid
+        Platform
         )
 
     # Setup all files (.so) for Android APK
@@ -77,6 +80,7 @@ elseif (FLUID_OS_IOS OR FLUID_OS_MACOSX)
         target_link_libraries(
             ${LIB_NAME}
             Fluid
+            Platform
             #T3DXRenderer
             #FileSystemArchive
             #ZipArchive
@@ -131,11 +135,8 @@ elseif (FLUID_OS_IOS OR FLUID_OS_MACOSX)
         # Setup all link libraries frameworks for Mac OS X
         target_link_libraries(
             ${LIB_NAME}
-            T3DPlatform
-            T3DLog
-			T3DUtils
-            T3DFramework
-            T3DCore
+            Fluid
+            Platform
             )
 
         # Setup all properties for this Mac OS X project.
@@ -184,6 +185,7 @@ elseif (FLUID_OS_LINUX)
     target_link_libraries(
         ${LIB_NAME}
         Fluid
+        Platform
         )
 
     # Setup install files and path for Windows.
