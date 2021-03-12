@@ -52,7 +52,7 @@ typedef unsigned short      uint16_t;
 typedef signed int          int32_t;
 typedef unsigned int        uint32_t;
 
-#if !defined (T3D_OS_LINUX) && !defined (FLUID_OS_LINUX)
+#if !defined (T3D_OS_ANDROID) && !defined (T3D_OS_LINUX)
     typedef signed long long    int64_t;
     typedef unsigned long long  uint64_t;
 #endif

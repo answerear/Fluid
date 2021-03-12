@@ -1,0 +1,4 @@
+include ':app'
+include ':Tiny3DLib'
+project (':Tiny3DLib').projectDir = new File('../../../Platform/Android/')
+include ':Tiny3DLib:Tiny3D'

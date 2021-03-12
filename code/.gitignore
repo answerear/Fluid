@@ -1,3 +1,11 @@
-/vs2019-x64
-/lib
 /bin
+/lib
+/vs2015
+/vs2015-x86
+/vs2015-x64
+/vs2017-x64
+/vs2019-x64
+/xcode-osx
+/xcode-simulator
+/xcode-ios
+/codeblocks-linux

@@ -1,0 +1,42 @@
+{
+ "header": {
+  "magic": "T3D",
+  "type": "Material",
+  "version": 256
+ },
+ "material": {
+  "techniques": [],
+  "cbuffers": [],
+  "programs": [
+   {
+    "header": {
+     "ID": 281,
+     "name": "Builtin/NoTexture"
+    },
+    "shaders": [
+     {
+      "header": {
+       "ID": 4,
+       "name": "Builtin/VS"
+      },
+      "source": "BuiltinNoTexture.hlsl",
+      "target": "",
+      "entry": "VS",
+      "stage": "vs"
+     },
+     {
+      "header": {
+       "ID": 6,
+       "name": "Builtin/PS"
+      },
+      "source": "BuiltinNoTexture.hlsl",
+      "target": "",
+      "entry": "PS",
+      "stage": "ps"
+     }
+    ]
+   }
+  ],
+  "samplers": []
+ }
+}

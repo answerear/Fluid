@@ -5,16 +5,16 @@
 # Feel free to make use of it in any way you like.
 #-------------------------------------------------------------------------------
 
-set_project_name(Fluid)
+set_project_name(T3DFluid)
 
 message(STATUS "Generating project : ${BIN_NAME}")
 
 
 if (MSVC)
     # Add definition only for Windows.
-    if (FLUID_BUILD_SHARED_LIBS)
+    if (TINY3D_BUILD_SHARED_LIBS)
         add_definitions(-D${LIB_NAME_TOUPPER}_EXPORT -D_USRDLL)
-    endif (FLUID_BUILD_SHARED_LIBS)
+    endif (TINY3D_BUILD_SHARED_LIBS)
 
     # Disable some warning for protobuf
     add_definitions(
@@ -27,21 +27,29 @@ endif (MSVC)
 
 
 # Setup all cmake variables for this project.
-set(FLUID_DEP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../dependencies")
-set(PLATFORM_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Platform")
+set(TINY3D_PLATFORM_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Platform")
+set(TINY3D_MATH_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Math")
+set(TINY3D_UTILS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Utils")
+set(TINY3D_LOG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Log")
+set(TINY3D_FRAMEWORK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Framework")
+set(TINY3D_DEP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Dependencies")
+set(TINY3D_CORE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Core")
 
 # Setup search header path for this project.
 include_directories(
-    "${PLATFORM_DIR}/include"
+    "${TINY3D_PLATFORM_DIR}/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${SDL2_INCLUDE_DIR}"
-    "${GLM_INCLUDE_DIR}"
+    "${TINY3D_MATH_DIR}/include"
+	"${TINY3D_UTILS_DIR}/include"
+	"${TINY3D_LOG_DIR}/include"
+	"${TINY3D_CORE_DIR}/include"
     )
 
-#if (FLUID_OS_WINDOWS)
+#if (TINY3D_OS_WINDOWS)
 #    set(TINY3D_ZLIB_LIBRARY "${TINY3D_DEP_DIR}/zlib/prebuilt/win32/${MSVC_CXX_ARCHITECTURE_ID}/zlibstatic.lib")
-#endif (FLUID_OS_WINDOWS)
+#endif (TINY3D_OS_WINDOWS)
 
 # Setup header files for this project.
 set_project_files(Include ${CMAKE_CURRENT_SOURCE_DIR}/Include/ .h)
@@ -54,16 +62,16 @@ set_project_files(Source ${CMAKE_CURRENT_SOURCE_DIR}/Source/ .cpp)
 
 
 # Setup all files for building this project.
-if (FLUID_BUILD_SHARED_LIBS)
+if (TINY3D_BUILD_SHARED_LIBS)
     # Make dynamic library for this project.
     add_library(${LIB_NAME} SHARED ${SOURCE_FILES})
-else (FLUID_BUILD_SHARED_LIBS)
+else (TINY3D_BUILD_SHARED_LIBS)
     # Make static library for this project.
     add_library(${LIB_NAME} STATIC ${SOURCE_FILES})
-endif (FLUID_BUILD_SHARED_LIBS)
+endif (TINY3D_BUILD_SHARED_LIBS)
 
 
-if (FLUID_OS_WINDOWS)
+if (TINY3D_OS_WINDOWS)
     # Windows
 
     # Setup link libraries for this project.
@@ -151,7 +159,7 @@ elseif (TINY3D_OS_ANDROID)
     
     set(ANDROID_ASSETS_DIR "${CMAKE_CURRENT_BINARY_DIR}/../../../../../src/main/assets")
     
-endif (FLUID_OS_WINDOWS)
+endif (TINY3D_OS_WINDOWS)
 
 
 # Setup project folder

@@ -1,0 +1,237 @@
+{
+ "header": {
+  "magic": "T3D",
+  "type": "Material",
+  "version": 256
+ },
+ "material": {
+  "techniques": [],
+  "cbuffers": [
+   {
+    "header": {
+     "ID": 283,
+     "name": "Builtin/UpdatePerObject"
+    },
+    "bufferSize": 768,
+    "paramIndexed": [],
+    "paramIndexedAuto": [
+     {
+      "index": 0,
+      "name": "",
+      "valueCode": 1,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 4,
+      "name": "",
+      "valueCode": 2,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 8,
+      "name": "",
+      "valueCode": 3,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 12,
+      "name": "",
+      "valueCode": 4,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 16,
+      "name": "",
+      "valueCode": 21,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 20,
+      "name": "",
+      "valueCode": 22,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 24,
+      "name": "",
+      "valueCode": 23,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 28,
+      "name": "",
+      "valueCode": 24,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 32,
+      "name": "",
+      "valueCode": 25,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 36,
+      "name": "",
+      "valueCode": 26,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 40,
+      "name": "",
+      "valueCode": 27,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 44,
+      "name": "",
+      "valueCode": 28,
+      "fextraParams": [],
+      "iextraParams": []
+     }
+    ],
+    "paramNamed": [],
+    "paramNamedAuto": []
+   },
+   {
+    "header": {
+     "ID": 283,
+     "name": "UpdatePerObject"
+    },
+    "bufferSize": 64,
+    "paramIndexed": [],
+    "paramIndexedAuto": [
+     {
+      "index": 0,
+      "name": "",
+      "valueCode": 1,
+      "fextraParams": [],
+      "iextraParams": []
+     }
+    ],
+    "paramNamed": [],
+    "paramNamedAuto": []
+   },
+   {
+    "header": {
+     "ID": 283,
+     "name": "Builtin/UpdatePerFrame"
+    },
+    "bufferSize": 512,
+    "paramIndexed": [],
+    "paramIndexedAuto": [
+     {
+      "index": 0,
+      "name": "",
+      "valueCode": 9,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 4,
+      "name": "",
+      "valueCode": 10,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 8,
+      "name": "",
+      "valueCode": 11,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 12,
+      "name": "",
+      "valueCode": 12,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 32,
+      "name": "",
+      "valueCode": 17,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 36,
+      "name": "",
+      "valueCode": 18,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 40,
+      "name": "",
+      "valueCode": 19,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 44,
+      "name": "",
+      "valueCode": 20,
+      "fextraParams": [],
+      "iextraParams": []
+     }
+    ],
+    "paramNamed": [],
+    "paramNamedAuto": []
+   },
+   {
+    "header": {
+     "ID": 283,
+     "name": "Builtin/UpdateRarely"
+    },
+    "bufferSize": 256,
+    "paramIndexed": [],
+    "paramIndexedAuto": [
+     {
+      "index": 16,
+      "name": "",
+      "valueCode": 13,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 20,
+      "name": "",
+      "valueCode": 14,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 24,
+      "name": "",
+      "valueCode": 15,
+      "fextraParams": [],
+      "iextraParams": []
+     },
+     {
+      "index": 28,
+      "name": "",
+      "valueCode": 16,
+      "fextraParams": [],
+      "iextraParams": []
+     }
+    ],
+    "paramNamed": [],
+    "paramNamedAuto": []
+   }
+  ],
+  "programs": [],
+  "samplers": []
+ }
+}

@@ -24,7 +24,7 @@
 #include <assert.h>
 
 
-#if defined FLUID_OS_WINDOWS      // Win32
+#if defined T3D_OS_WINDOWS      // Win32
 
     #ifdef _DEBUG   // debug
         #define T3D_DEBUG
@@ -42,7 +42,7 @@
 	#define T3D_EXPORT_API      __declspec(dllexport)
 	#define T3D_IMPORT_API      __declspec(dllimport)
 
-#elif defined FLUID_OS_IOS || defined FLUID_OS_OSX || defined FLUID_OS_LINUX  // iOS or Mac OS x or Linux
+#elif defined T3D_OS_IOS || defined T3D_OS_OSX || defined T3D_OS_LINUX  // iOS or Mac OS x or Linux
 
     #ifdef DEBUG    // debug
         #define T3D_DEBUG
@@ -53,7 +53,7 @@
 	#define T3D_EXPORT_API
 	#define T3D_IMPORT_API
 
-#elif defined FLUID_OS_ANDROID    // Android
+#elif defined T3D_OS_ANDROID    // Android
 
     #ifdef NDK_DEBUG    // debug
         #define T3D_DEBUG

@@ -139,23 +139,23 @@ namespace Tiny3D
 
         if (ret)
         {
-#if defined (FLUID_OS_WINDOWS)
+#if defined (T3D_OS_WINDOWS)
             info.hWnd = sdlInfo.info.win.window;
             info.hDC = sdlInfo.info.win.hdc;
             info.hInstance = sdlInfo.info.win.hinstance;
-#elif defined (FLUID_OS_LINUX)
+#elif defined (T3D_OS_LINUX)
             // Linux X11
             info.display = sdlInfo.info.x11.display;
             info.window = sdlInfo.info.x11.window;
-#elif defined (FLUID_OS_OSX)
+#elif defined (T3D_OS_OSX)
             // Mac OS X cocoa
             info.window = sdlInfo.info.cocoa.window;
-#elif defined (FLUID_OS_IOS)
+#elif defined (T3D_OS_IOS)
             // iOS UIKit
             info.window = sdlInfo.info.uikit.window;
             info.framebuffer = sdlInfo.info.uikit.framebuffer;
             info.colorbuffer = sdlInfo.info.uikit.colorbuffer;
-#elif defined (FLUID_OS_ANDROID)
+#elif defined (T3D_OS_ANDROID)
             info.window = sdlInfo.info.android.window;
             info.surface = sdlInfo.info.android.surface;
 #endif

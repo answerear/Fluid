@@ -21,11 +21,9 @@
 #define __FLUID_PREREQUISITES_H__
 
 
-#include <glm.hpp>
-
 #include <T3DPlatform.h>
 
-#if defined FLUID_EXPORT
+#if defined T3DFLUID_EXPORT
     #define FLUID_API    T3D_EXPORT_API
 #else
     #define FLUID_API    T3D_IMPORT_API

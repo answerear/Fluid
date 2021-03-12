@@ -25,7 +25,7 @@ namespace TempNS
 {
     Temp::Temp()
     {
-        int32_t val = glm::abs(10);
+
     }
 
     Temp::~Temp()

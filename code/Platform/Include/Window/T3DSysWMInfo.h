@@ -30,24 +30,24 @@ namespace Tiny3D
 {
     struct SysWMInfo
     {
-#if defined (FLUID_OS_WINDOWS)
+#if defined (T3D_OS_WINDOWS)
         // Windows
         THandle     hWnd;           /**< The window handle */
         THandle     hDC;            /**< The window device context */
         THandle     hInstance;      /**< The window instance */
-#elif defined (FLUID_OS_LINUX)
+#elif defined (T3D_OS_LINUX)
         // Linux X11
         void        *display;       /**< The X11 display (Display) */
         ulong_t     window;        /**< The X11 window (Window) */
-#elif defined (FLUID_OS_OSX)
+#elif defined (T3D_OS_OSX)
         // Mac OS X cocoa
         void        *window;        /**< The Cocoa window (NSWindow) */
-#elif defined (FLUID_OS_IOS)
+#elif defined (T3D_OS_IOS)
         // iOS UIKit
         void        *window;        /**< The UIKit window (UIWindow) */
         uint32_t    framebuffer;    /**< The GL view's Framebuffer Object */
         uint32_t    colorbuffer;    /**< the GL view's color Renderbuffer Object */
-#elif defined (FLUID_OS_ANDROID)
+#elif defined (T3D_OS_ANDROID)
         void        *window;        /**< The Android native window */
         void        *surface;       /**< The Android EGL surface */
 #endif

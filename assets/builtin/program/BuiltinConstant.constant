@@ -1,0 +1,54 @@
+// built-in constant buffer for updating per object 
+gpu_cbuffer Builtin/UpdatePerObject
+{
+    // about world matrix
+    param_indexed_auto 0 world_matrix
+    param_indexed_auto 4 inverse_world_matrix
+    param_indexed_auto 8 transpose_world_matrix
+    param_indexed_auto 12 inverse_transpose_world_matrix
+    
+    // about world * view matrix
+    param_indexed_auto 16 worldview_matrix
+    param_indexed_auto 20 inverse_worldview_matrix
+    param_indexed_auto 24 transpose_worldview_matrix
+    param_indexed_auto 28 inverse_transpose_worldview_matrix
+    
+    // about world * view * projection matrix
+    param_indexed_auto 32 worldviewproj_matrix
+    param_indexed_auto 36 inverse_worldviewproj_matrix
+    param_indexed_auto 40 transpose_worldviewproj_matrix
+    param_indexed_auto 44 inverse_transpose_worldviewproj_matrix
+}
+
+// built-in constant buffer for updating per object 
+gpu_cbuffer UpdatePerObject
+{
+    // about world matrix
+    param_indexed_auto 0 world_matrix
+}
+
+// built-in constant buffer for updating per frame
+gpu_cbuffer Builtin/UpdatePerFrame
+{
+    // about view matrix
+    param_indexed_auto 0 view_matrix
+    param_indexed_auto 4 inverse_view_matrix
+    param_indexed_auto 8 transpose_view_matrix
+    param_indexed_auto 12 inverse_transpose_view_matrix
+    
+    // about view * projection matrix
+    param_indexed_auto 32 viewproj_matrix
+    param_indexed_auto 36 inverse_viewproj_matrix
+    param_indexed_auto 40 transpose_viewproj_matrix
+    param_indexed_auto 44 inverse_transpose_viewproj_matrix
+}
+
+// built-in constant buffer for updating rarely
+gpu_cbuffer Builtin/UpdateRarely
+{
+    // about projection matrix
+    param_indexed_auto 16 projection_matrix
+    param_indexed_auto 20 inverse_projection_matrix
+    param_indexed_auto 24 transpose_projection_matrix
+    param_indexed_auto 28 inverse_transpose_projection_matrix
+}

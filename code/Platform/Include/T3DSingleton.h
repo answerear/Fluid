@@ -26,7 +26,7 @@
 #include <vector>
 
 
-#if defined (FLUID_OS_WINDOWS)
+#if defined (T3D_OS_WINDOWS)
 #pragma warning(disable:4661)
 #endif
 

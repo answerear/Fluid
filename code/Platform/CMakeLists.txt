@@ -5,16 +5,16 @@
 # Feel free to make use of it in any way you like.
 #-------------------------------------------------------------------------------
 
-set_project_name(Platform)
+set_project_name(T3DPlatform)
 
 message(STATUS "Generating project : ${BIN_NAME}")
 
 
 if (MSVC)
 	# Add definition only for Windows.
-	if (FLUID_BUILD_SHARED_LIBS)
+	if (TINY3D_BUILD_SHARED_LIBS)
 		add_definitions(-D${LIB_NAME_TOUPPER}_EXPORT -D_USRDLL)
-	endif (FLUID_BUILD_SHARED_LIBS)
+	endif (TINY3D_BUILD_SHARED_LIBS)
 endif (MSVC)
 
 
@@ -29,20 +29,20 @@ include_directories(
 	"${SDL2_INCLUDE_DIR}"
 	)
 
-if (FLUID_OS_WINDOWS)
+if (TINY3D_OS_WINDOWS)
 	# Windows
 	include_directories(
 		"${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Windows"
 		"${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Desktop"
 		)
-elseif (FLUID_OS_MACOSX)
+elseif (TINY3D_OS_MACOSX)
 	# Mac OS X
 	include_directories(
 		"${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Unix"
 		"${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/OSX"
 		"${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Desktop"
 		)
-elseif (FLUID_OS_LINUX)
+elseif (TINY3D_OS_LINUX)
 	# Linux
 	include_directories(
 		"${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Unix"
@@ -55,13 +55,13 @@ elseif (TINY3D_OS_IOS)
 		"${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Unix"
 		"${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/iOS"
 		)
-elseif (FLUID_OS_ANDROID)
+elseif (TINY3D_OS_ANDROID)
 	# Android
 	include_directories(
 		"${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Unix"
 		"${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Android"
 		)
-endif (FLUID_OS_WINDOWS)
+endif (TINY3D_OS_WINDOWS)
 
 
 
@@ -78,16 +78,16 @@ set_project_files(Include\\\\Device ${CMAKE_CURRENT_SOURCE_DIR}/Include/Device/ 
 set_project_files(Include\\\\Console ${CMAKE_CURRENT_SOURCE_DIR}/Include/Console/ .h)
 set_project_files(Include\\\\Reflection ${CMAKE_CURRENT_SOURCE_DIR}/Include/Reflection/ .h)
 
-if (FLUID_OS_WINDOWS)
+if (TINY3D_OS_WINDOWS)
 	# Windows
 	set_project_files(Include\\\\Adapter\\\\Windows ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Windows/ .h)
 	set_project_files(Include\\\\Adapter\\\\Desktop ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Desktop/ .h)
-elseif (FLUID_OS_MACOSX)
+elseif (TINY3D_OS_MACOSX)
 	# Mac OS X
 	set_project_files(Include\\\\Adapter\\\\Unix ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Unix/ .h)
 	set_project_files(Include\\\\Adapter\\\\OSX ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/OSX/ .h)
 	set_project_files(Include\\\\Adapter\\\\Desktop ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Desktop/ .h)
-elseif (FLUID_OS_LINUX)
+elseif (TINY3D_OS_LINUX)
 	# Linux
 	set_project_files(Include\\\\Adapter\\\\Unix ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Unix/ .h)
 	set_project_files(Include\\\\Adapter\\\\Linux ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Linux/ .h)
@@ -96,11 +96,11 @@ elseif (TINY3D_OS_IOS)
 	# iOS
 	set_project_files(Include\\\\Adapter\\\\Unix ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Unix/ .h)
 	set_project_files(Include\\\\Adapter\\\\iOS ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/iOS/ .h)
-elseif (FLUID_OS_ANDROID)
+elseif (TINY3D_OS_ANDROID)
 	# Android
 	set_project_files(Include\\\\Adapter\\\\Unix ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Unix/ .h)
 	set_project_files(Include\\\\Adapter\\\\Android ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Android/ .h)
-endif (FLUID_OS_WINDOWS)
+endif (TINY3D_OS_WINDOWS)
 
 if (TINY3D_OS_DESKTOP)
 	set_project_files(Include\\\\Adapter\\\\Desktop ${CMAKE_CURRENT_SOURCE_DIR}/Include/Adapter/Desktop/ .h)
@@ -121,11 +121,11 @@ set_project_files(Source\\\\Device ${CMAKE_CURRENT_SOURCE_DIR}/Source/Device/ .c
 set_project_files(Source\\\\Console ${CMAKE_CURRENT_SOURCE_DIR}/Source/Console/ .cpp)
 set_project_files(Source\\\\Reflection ${CMAKE_CURRENT_SOURCE_DIR}/Source/Reflection/ .cpp)
 
-if (FLUID_OS_WINDOWS)
+if (TINY3D_OS_WINDOWS)
 	# Windows
 	set_project_files(Source\\\\Adapter\\\\Windows ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/Windows/ .cpp)
 	set_project_files(Source\\\\Adapter\\\\Desktop ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/Desktop/ .cpp)
-elseif (FLUID_OS_MACOSX)
+elseif (TINY3D_OS_MACOSX)
 	# Mac OS X
 	set_project_files(Source\\\\Adapter\\\\Unix ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/Unix/ .cpp)
 	set_project_files(Source\\\\Adapter\\\\OSX ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/OSX/ .cpp)
@@ -136,7 +136,7 @@ elseif (FLUID_OS_MACOSX)
     #    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework ${FW}")
     #endforeach()
     message(STATUS "Link flags : ${CMAKE_EXE_LINKER_FLAGS}")
-elseif (FLUID_OS_LINUX)
+elseif (TINY3D_OS_LINUX)
 	# Linux
 	set_project_files(Source\\\\Adapter\\\\Unix ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/Unix/ .cpp)
 	set_project_files(Source\\\\Adapter\\\\Linux ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/Linux/ .cpp)
@@ -148,11 +148,11 @@ elseif (TINY3D_OS_IOS)
 	set_project_files(Source\\\\Adapter\\\\iOS ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/iOS/ .mm)
     set_project_files(Include\\\\Adapter\\\\iOS ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/iOS/ .h)
     set_project_files(Source\\\\Adapter\\\\iOS ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/iOS/ .m)
-elseif (FLUID_OS_ANDROID)
+elseif (TINY3D_OS_ANDROID)
 	# Android
 	set_project_files(Source\\\\Adapter\\\\Unix ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/Unix/ .cpp)
 	set_project_files(Source\\\\Adapter\\\\Android ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/Android/ .cpp)
-endif (FLUID_OS_WINDOWS)
+endif (TINY3D_OS_WINDOWS)
 
 if (TINY3D_OS_DESKTOP)
 	set_project_files(Source\\\\Adapter\\\\Desktop ${CMAKE_CURRENT_SOURCE_DIR}/Source/Adapter/Desktop/ .cpp)
@@ -161,16 +161,16 @@ elseif (TINY3D_OS_MOBILE)
 endif (TINY3D_OS_DESKTOP)
 
 # Setup all files for building this project.
-if (FLUID_BUILD_SHARED_LIBS)
+if (TINY3D_BUILD_SHARED_LIBS)
     # Make dynamic library for this project.
     add_library(${LIB_NAME} SHARED ${SOURCE_FILES})
-else (FLUID_BUILD_SHARED_LIBS)
+else (TINY3D_BUILD_SHARED_LIBS)
     # Make static library for this project.
     add_library(${LIB_NAME} STATIC ${SOURCE_FILES})
-endif (FLUID_BUILD_SHARED_LIBS)
+endif (TINY3D_BUILD_SHARED_LIBS)
 
 
-if (FLUID_OS_WINDOWS)
+if (TINY3D_OS_WINDOWS)
 	# Windows
 	target_link_libraries(
 		${LIB_NAME}
@@ -192,14 +192,14 @@ if (FLUID_OS_WINDOWS)
 		PATTERN "MacOSX" EXCLUDE
 		PATTERN "Unix" EXCLUDE
 		PATTERN "Windows" EXCLUDE)
-elseif (FLUID_OS_MACOSX)
+elseif (TINY3D_OS_MACOSX)
 	# Mac OS X
 	target_link_libraries(
 		${LIB_NAME}
 		${SDL2_LIBRARY}
 		${SDL2_OSX_FRAMEWORKS}
 		)
-elseif (FLUID_OS_LINUX)
+elseif (TINY3D_OS_LINUX)
 	# Linux
     add_definitions(-DSDL_VIDEO_DRIVER_X11=1)
 	target_link_libraries(
@@ -230,14 +230,14 @@ elseif (TINY3D_OS_IOS)
         ${SDL2_OSX_FRAMEWORKS}
         ${FWK_SECURITY}
 		)
-elseif (FLUID_OS_ANDROID)
+elseif (TINY3D_OS_ANDROID)
 	# Android
 	target_link_libraries(
 		${LIB_NAME}
 		LINK_PRIVATE ${SDL2_BINARY}
 		log
 		)
-endif (FLUID_OS_WINDOWS)
+endif (TINY3D_OS_WINDOWS)
 
 
 # Setup project folder

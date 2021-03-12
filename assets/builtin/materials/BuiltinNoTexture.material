@@ -1,0 +1,32 @@
+
+material Builtin/NoTexture
+{
+    technique 0
+    {
+        render_queue 2000
+
+        pass 0
+        {
+            polygon_mode wireframe
+            
+            gpu_program_ref Builtin/NoTexture
+            {
+                gpu_cbuffer_ref Builtin/UpdatePerObject
+                {
+                    slot 0
+                }
+                
+                gpu_cbuffer_ref Builtin/UpdatePerFrame
+                {
+                    slot 1
+                }
+                
+                gpu_cbuffer_ref Builtin/UpdateRarely
+                {
+                    slot 2
+                }
+            }
+        }
+    }
+}
+

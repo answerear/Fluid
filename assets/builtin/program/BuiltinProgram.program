@@ -1,0 +1,17 @@
+
+gpu_program Builtin/NoTexture
+{
+    vertex_program Builtin/VS
+    {
+        source BuiltinNoTexture.hlsl
+        entry_point VS
+        stage vs
+    }
+
+    fragment_program Builtin/PS
+    {
+        source BuiltinNoTexture.hlsl
+        entry_point PS
+        stage ps
+    }
+}
