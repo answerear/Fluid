@@ -45,6 +45,7 @@ include_directories(
 	"${TINY3D_UTILS_DIR}/include"
 	"${TINY3D_LOG_DIR}/include"
 	"${TINY3D_CORE_DIR}/include"
+    "${TINY3D_FRAMEWORK_DIR}/include"
     )
 
 #if (TINY3D_OS_WINDOWS)
@@ -79,14 +80,24 @@ if (TINY3D_OS_WINDOWS)
         # Visual Studio version is 2015 or later.
         target_link_libraries(
             ${LIB_NAME}
+            LINK_PRIVATE T3DPlatform
+            LINK_PRIVATE T3DLog
+            LINK_PRIVATE T3DUtils
+            LINK_PRIVATE T3DFramework
+            LINK_PRIVATE T3DMath
+            LINK_PRIVATE T3DCore
             LINK_PRIVATE legacy_stdio_definitions
-            LINK_PRIVATE ${SDL2_LIBRARY}
             )
     else ()
         # Visual Studio version is older than 2015
         target_link_libraries(
             ${LIB_NAME}
-            LINK_PRIVATE ${SDL2_LIBRARY}
+            LINK_PRIVATE T3DPlatform
+            LINK_PRIVATE T3DLog
+            LINK_PRIVATE T3DUtils
+            LINK_PRIVATE T3DFramework
+            LINK_PRIVATE T3DMath
+            LINK_PRIVATE T3DCore
             )
     endif ()
 
@@ -133,7 +144,13 @@ elseif (TINY3D_OS_LINUX)
     # Linux
     target_link_libraries(
         ${LIB_NAME}
-        LINK_PRIVATE ${SDL2_LIBRARY}
+        LINK_PRIVATE T3DPlatform
+        LINK_PRIVATE T3DLog
+        LINK_PRIVATE T3DUtils
+        LINK_PRIVATE T3DFramework
+        LINK_PRIVATE T3DMath
+        LINK_PRIVATE T3DCore
+#        LINK_PRIVATE ${SDL2_LIBRARY}
 #       LINK_PRIVATE z
         )
 elseif (TINY3D_OS_IOS)
@@ -148,12 +165,24 @@ elseif (TINY3D_OS_IOS)
 
     target_link_libraries(
         ${LIB_NAME}
+        LINK_PRIVATE T3DPlatform
+        LINK_PRIVATE T3DLog
+        LINK_PRIVATE T3DUtils
+        LINK_PRIVATE T3DFramework
+        LINK_PRIVATE T3DMath
+        LINK_PRIVATE T3DCore
         )
 elseif (TINY3D_OS_ANDROID)
     # Android
     target_link_libraries(
         ${LIB_NAME}
-        LINK_PRIVATE ${SDL2_BINARY}
+        LINK_PRIVATE T3DPlatform
+        LINK_PRIVATE T3DLog
+        LINK_PRIVATE T3DUtils
+        LINK_PRIVATE T3DFramework
+        LINK_PRIVATE T3DMath
+        LINK_PRIVATE T3DCore
+#        LINK_PRIVATE ${SDL2_BINARY}
 #       LINK_PRIVATE z
         )
     
