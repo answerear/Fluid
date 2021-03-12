@@ -20,6 +20,7 @@ include_directories(
     "${TINY3D_LOG_INC_DIR}"
     "${TINY3D_CORE_INC_DIR}"
 	"${TINY3D_UTILS_INC_DIR}"
+    "${TINY3D_FLUID_INC_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${SDL2_INCLUDE_DIR}"
     )
@@ -49,6 +50,7 @@ if (TINY3D_OS_WINDOWS)
         T3DMath
         T3DFramework
         T3DCore
+        T3DFluid
         )
     
     # Setup install files and path for Windows.
@@ -69,6 +71,7 @@ elseif (TINY3D_OS_ANDROID)
         T3DMath
         T3DFramework
         T3DCore
+        T3DFluid
         )
 
     # Setup all files (.so) for Android APK
@@ -99,6 +102,7 @@ elseif (TINY3D_OS_IOS OR TINY3D_OS_MACOSX)
             T3DMath
             T3DFramework
             T3DCore
+            T3DFluid
             #T3DXRenderer
             #FileSystemArchive
             #ZipArchive
@@ -158,6 +162,7 @@ elseif (TINY3D_OS_IOS OR TINY3D_OS_MACOSX)
 			T3DUtils
             T3DFramework
             T3DCore
+            T3DFluid
             )
 
         # Setup all properties for this Mac OS X project.
@@ -210,6 +215,7 @@ elseif (TINY3D_OS_LINUX)
 		T3DUtils
         T3DFramework
         T3DCore
+        T3DFluid
         )
 
     # Setup install files and path for Windows.

@@ -21,7 +21,8 @@
 #define __FLUID_PREREQUISITES_H__
 
 
-#include <T3DPlatform.h>
+#include <Tiny3D.h>
+
 
 #if defined T3DFLUID_EXPORT
     #define FLUID_API    T3D_EXPORT_API
