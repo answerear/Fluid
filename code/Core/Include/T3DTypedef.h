@@ -108,6 +108,11 @@ namespace Tiny3D
     T3D_DECLARE_SMART_PTR(RenderGroup);
     T3D_DECLARE_SMART_PTR(RenderQueue);
 
+    T3D_DECLARE_SMART_PTR(BlendState);
+    T3D_DECLARE_SMART_PTR(DepthStencilState);
+    T3D_DECLARE_SMART_PTR(RasterizerState);
+    T3D_DECLARE_SMART_PTR(SamplerState);
+
     T3D_DECLARE_SMART_PTR(ImageCodecBase);
     T3D_DECLARE_SMART_PTR(ImageCodec);
 

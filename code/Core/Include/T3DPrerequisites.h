@@ -142,6 +142,11 @@ namespace Tiny3D
     class RenderGroup;
     class RenderQueue;
 
+    class BlendState;
+    class DepthStencilState;
+    class RasterizerState;
+    class SamplerState;
+
     class ImageCodecBase;
     class ImageCodec;
 

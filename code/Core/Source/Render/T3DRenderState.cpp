@@ -25,56 +25,92 @@ namespace Tiny3D
 {
     //--------------------------------------------------------------------------
 
-    HWBlendState::HWBlendState()
+    BlendStatePtr BlendState::create()
+    {
+        BlendStatePtr state = new BlendState();
+        state->release();
+        return state;
+    }
+
+    //--------------------------------------------------------------------------
+
+    BlendState::BlendState()
     {
 
     }
 
     //--------------------------------------------------------------------------
 
-    HWBlendState::~HWBlendState()
+    BlendState::~BlendState()
     {
 
     }
 
     //--------------------------------------------------------------------------
 
-    HWDepthStencilState::HWDepthStencilState()
+    DepthStencilStatePtr DepthStencilState::create()
+    {
+        DepthStencilStatePtr state = new DepthStencilState();
+        state->release();
+        return state;
+    }
+
+    //--------------------------------------------------------------------------
+
+    DepthStencilState::DepthStencilState()
     {
 
     }
 
     //--------------------------------------------------------------------------
 
-    HWDepthStencilState::~HWDepthStencilState()
+    DepthStencilState::~DepthStencilState()
     {
 
     }
 
     //--------------------------------------------------------------------------
 
-    HWRasterizerState::HWRasterizerState()
+    RasterizerStatePtr RasterizerState::create()
+    {
+        RasterizerStatePtr state = new RasterizerState();
+        state->release();
+        return state;
+    }
+
+    //--------------------------------------------------------------------------
+
+    RasterizerState::RasterizerState()
     {
 
     }
 
     //--------------------------------------------------------------------------
 
-    HWRasterizerState::~HWRasterizerState()
+    RasterizerState::~RasterizerState()
     {
 
     }
 
     //--------------------------------------------------------------------------
 
-    HWSamplerState::HWSamplerState()
+    SamplerStatePtr SamplerState::create()
+    {
+        SamplerStatePtr state = new SamplerState();
+        state->release();
+        return state;
+    }
+
+    //--------------------------------------------------------------------------
+
+    SamplerState::SamplerState()
     {
 
     }
 
     //--------------------------------------------------------------------------
 
-    HWSamplerState::~HWSamplerState()
+    SamplerState::~SamplerState()
     {
 
     }

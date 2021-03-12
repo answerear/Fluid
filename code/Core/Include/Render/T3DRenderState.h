@@ -30,131 +30,182 @@
 
 namespace Tiny3D
 {
-    class T3D_ENGINE_API HWBlendState : public Object
+    class T3D_ENGINE_API BlendState : public Object
     {
     public:
-        virtual ~HWBlendState();
+        static BlendStatePtr create();
 
-        virtual void setAlpha2CoverageEnabled(bool enabled) = 0;
-        virtual bool isAlpha2CoverageEnabled() const = 0;
+        BlendState();
+        virtual ~BlendState();
 
-        virtual void setIndependentBlendEnabled(bool enabled) = 0;
-        virtual bool isIndependentBlendEnabled() const = 0;
+        void setAlpha2CoverageEnabled(bool enabled);
+        bool isAlpha2CoverageEnabled() const;
 
-        virtual void setBlendEnabled(int32_t idx) = 0;
-        virtual bool isBlendEnabled(int32_t idx) = 0;
+        void setIndependentBlendEnabled(bool enabled);
+        bool isIndependentBlendEnabled() const;
 
-        virtual void setSrcBlend(int32_t idx, BlendFactor factor) = 0;
-        virtual BlendFactor getSrcBlend(int32_t idx) const = 0;
+        void setBlendEnabled(int32_t idx, bool enabled);
+        bool isBlendEnabled(int32_t idx);
 
-        virtual void setDstBlend(int32_t idx, BlendFactor factor) = 0;
-        virtual BlendFactor getDstBlend(int32_t idx) const = 0;
+        void setSrcBlend(int32_t idx, BlendFactor factor);
+        BlendFactor getSrcBlend(int32_t idx) const;
 
-        virtual void setBlendOp(int32_t idx, BlendOperation op) = 0;
-        virtual BlendOperation getBlendOp(int32_t idx) const = 0;
+        void setDstBlend(int32_t idx, BlendFactor factor);
+        BlendFactor getDstBlend(int32_t idx) const;
 
-        virtual void setSrcBlendAlpha(int32_t idx, BlendFactor factor) = 0;
-        virtual BlendFactor getSrcBlendAlpha(int32_t idx) const = 0;
+        void setBlendOp(int32_t idx, BlendOperation op);
+        BlendOperation getBlendOp(int32_t idx) const;
 
-        virtual void setDstBlendAlpha(int32_t idx, BlendFactor factor) = 0;
-        virtual BlendFactor getDstBlendAlpha(int32_t idx) const = 0;
+        void setSrcBlendAlpha(int32_t idx, BlendFactor factor);
+        BlendFactor getSrcBlendAlpha(int32_t idx) const;
 
-        virtual void setBlendOpAlpha(int32_t idx, BlendOperation op) = 0;
-        virtual BlendOperation getBlendOpAlpha(int32_t idx) const = 0;
+        void setDstBlendAlpha(int32_t idx, BlendFactor factor);
+        BlendFactor getDstBlendAlpha(int32_t idx) const;
+
+        void setBlendOpAlpha(int32_t idx, BlendOperation op);
+        BlendOperation getBlendOpAlpha(int32_t idx) const;
 
     protected:
-        HWBlendState();
+        struct RTBlendState
+        {
+            bool            mBlendEnable;
+            BlendFactor     mSrcBlend;
+            BlendFactor     mDestBlend;
+            BlendOperation  mBlendOp;
+            BlendFactor     mSrcBlendAlpha;
+            BlendFactor     mDestBlendAlpha;
+            BlendOperation  mBlendOpAlpha;
+            uint8_t         mRenderTargetWriteMask;
+        };
+
+        enum
+        {
+            MAX_RENDER_TARGET = 8
+        };
+
+        bool    mAlphaToCoverageEnable;
+        bool    mIndependentBlendEnable;
+
+        RTBlendState    mRenderTargetState[MAX_RENDER_TARGET];
     };
 
-    class T3D_ENGINE_API HWDepthStencilState : public Object
+    class T3D_ENGINE_API DepthStencilState : public Object
     {
     public:
-        virtual ~HWDepthStencilState();
+        static DepthStencilStatePtr create();
 
-        virtual void setDepthTestEnabled(bool enabled) = 0;
-        virtual bool isDepthTestEnabled() const = 0;
+        DepthStencilState();
+        virtual ~DepthStencilState();
 
-        virtual void setDepthWriteEnabled(bool enabled) = 0;
-        virtual bool isDepthWriteEnabled() const = 0;
+        void setDepthTestEnabled(bool enabled);
+        bool isDepthTestEnabled() const;
 
-        virtual void setDepthFunction(CompareFunction func) = 0;
-        virtual CompareFunction getDepthFunction() const = 0;
+        void setDepthWriteEnabled(bool enabled);
+        bool isDepthWriteEnabled() const;
 
-        virtual void setStencilEnabled(bool enabled) = 0;
-        virtual bool isStencilEnabled() const = 0;
+        void setDepthFunction(CompareFunction func);
+        CompareFunction getDepthFunction() const;
 
-        virtual void setStencilReadMask(uint8_t mask) = 0;
-        virtual uint8_t getStencilReadMask() const = 0;
+        void setStencilEnabled(bool enabled);
+        bool isStencilEnabled() const;
 
-        virtual void setStencilWriteMask(uint8_t mask) = 0;
-        virtual uint8_t getStencilWriteMask() const = 0;
+        void setStencilReadMask(uint8_t mask);
+        uint8_t getStencilReadMask() const;
 
-        virtual void setStencilRef(uint8_t ref) = 0;
-        virtual uint8_t getStencilRef() const = 0;
+        void setStencilWriteMask(uint8_t mask);
+        uint8_t getStencilWriteMask() const;
 
-        virtual void setStencilFunction(CompareFunction func) = 0;
-        virtual CompareFunction getStencilFunction() const = 0;
+        void setStencilRef(uint8_t ref);
+        uint8_t getStencilRef() const;
 
-        virtual void setStencilOp(StencilOp stencilFail, StencilOp depthFail, StencilOp pass) = 0;
+        void setStencilFunction(CompareFunction func);
+        CompareFunction getStencilFunction() const;
+
+        void setStencilOp(StencilOp stencilFail, StencilOp depthFail, StencilOp pass);
 
     protected:
-        HWDepthStencilState();
+        bool            mDepthTestEnable;
+        bool            mDepthWriteEnable;
+        CompareFunction mDepthFunc;
+        bool            mStencilEnable;
+        uint8_t         mStencilReadMask;
+        uint8_t         mStencilWriteMask;
+        uint8_t         mStencilRef;
+        CompareFunction mStencilFunc;
+        StencilOp       mStencilFailOp;
+        StencilOp       mDepthFailOp;
+        StencilOp       mStencilPassOp;
     };
 
-    class T3D_ENGINE_API HWRasterizerState : public Object
+    class T3D_ENGINE_API RasterizerState : public Object
     {
     public:
-        virtual ~HWRasterizerState();
+        static RasterizerStatePtr create();
 
-        virtual void setPolygonMode(PolygonMode mode) = 0;
-        virtual PolygonMode getPolygonMode() const = 0;
+        RasterizerState();
+        virtual ~RasterizerState();
 
-        virtual void setCullingMode(CullingMode mode) = 0;
-        virtual CullingMode getCullingMode() const = 0;
+        void setPolygonMode(PolygonMode mode);
+        PolygonMode getPolygonMode() const;
 
-        virtual void setManualCullingMode(ManualCullingMode mode) = 0;
-        virtual ManualCullingMode getManualCullingMode() const = 0;
+        void setCullingMode(CullingMode mode);
+        CullingMode getCullingMode() const;
 
-        virtual void setDepthBias(int32_t bias) = 0;
-        virtual int32_t getDepthBias() const = 0;
+        void setManualCullingMode(ManualCullingMode mode);
+        ManualCullingMode getManualCullingMode() const;
 
-        virtual void setDepthBiasClamp(Real clamp) = 0;
-        virtual Real getDepthBiasClamp() const = 0;
+        void setDepthBias(int32_t bias);
+        int32_t getDepthBias() const;
 
-        virtual void setSlopeScaledDepthBias(Real slope) = 0;
-        virtual Real getSlopeScaledDepthBias() const = 0;
+        void setDepthBiasClamp(Real clamp);
+        Real getDepthBiasClamp() const;
 
-        virtual void setDepthClipEnabled(bool enabled) = 0;
-        virtual bool isDepthClipEnabled() const = 0;
+        void setSlopeScaledDepthBias(Real slope);
+        Real getSlopeScaledDepthBias() const;
 
-        virtual void setScissorEnabled(bool enabled) = 0;
-        virtual bool isScissorEnabled() const = 0;
+        void setDepthClipEnabled(bool enabled);
+        bool isDepthClipEnabled() const;
 
-        virtual void setMSAAEnabled(bool enabled) = 0;
-        virtual bool isMSAAEnabled() const = 0;
+        void setScissorEnabled(bool enabled);
+        bool isScissorEnabled() const;
+
+        void setMSAAEnabled(bool enabled);
+        bool isMSAAEnabled() const;
 
     protected:
-        HWRasterizerState();
+        PolygonMode         mPolygonMode;
+        CullingMode         mCullingMode;
+        ManualCullingMode   mManualCullingMode;
+        int32_t             mDepthBias;
+        Real                mDepthBiasClamp;
+        Real                mSlopeScaledDepthBias;
+        bool                mDepthClipEnable;
+        bool                mScissorEnable;
+        bool                mMSAAEnable;
     };
 
-    class T3D_ENGINE_API HWSamplerState : public Object
+    class T3D_ENGINE_API SamplerState : public Object
     {
     public:
-        virtual ~HWSamplerState();
+        static SamplerStatePtr create();
+
+        SamplerState();
+
+        virtual ~SamplerState();
 
         /**
          * @fn  const UVWAddressMode Sampler::&getAddressMode() const;
          * @brief   Gets address mode
          * @return  The address mode.
          */
-        virtual const UVWAddressMode& getAddressMode() const = 0;
+        const UVWAddressMode& getAddressMode() const;
 
         /**
          * @fn  void Sampler::setAddressMode(const UVWAddressMode &uvw);
          * @brief   Sets address mode
          * @param   uvw The uvw.
          */
-        virtual void setAddressMode(const UVWAddressMode& uvw) = 0;
+        void setAddressMode(const UVWAddressMode& uvw);
 
         /**
          * @fn  void Sampler::setAddressMode(TextureAddressMode u,
@@ -164,45 +215,29 @@ namespace Tiny3D
          * @param   v   A TextureAddressMode to process.
          * @param   w   A TextureAddressMode to process.
          */
-        virtual void setAddressMode(TextureAddressMode u, TextureAddressMode v,
-            TextureAddressMode w) = 0;
+        void setAddressMode(TextureAddressMode u, TextureAddressMode v,
+            TextureAddressMode w);
 
         /**
          * @fn  void Sampler::setAddressMode(TextureAddressMode mode);
          * @brief   Sets address mode
          * @param   mode    The mode.
          */
-        virtual void setAddressMode(TextureAddressMode mode) = 0;
+        void setAddressMode(TextureAddressMode mode);
 
         /**
          * @fn  const ColorRGBA Sampler::&getBorderColor() const;
          * @brief   Gets border color
          * @return  The border color.
          */
-        virtual const ColorRGBA& getBorderColor() const = 0;
+        const ColorRGBA& getBorderColor() const;
 
         /**
          * @fn  void Sampler::setBorderColor(const ColorRGBA &color);
          * @brief   Sets border color
          * @param   color   The color.
          */
-        virtual void setBorderColor(const ColorRGBA& color) = 0;
-
-        /**
-         * @fn  FilterOptions Sampler::getFilter(FilterType type);
-         * @brief   Gets a filter
-         * @param   type    The type.
-         * @return  The filter.
-         */
-        virtual FilterOptions getFilter(FilterType type) = 0;
-
-        /**
-         * @fn  void Sampler::setFilter(FilterOptions opt, FilterType type);
-         * @brief   Sets a filter
-         * @param   opt     The option.
-         * @param   type    The type.
-         */
-        virtual void setFilter(FilterOptions opt, FilterType type) = 0;
+        void setBorderColor(const ColorRGBA& color);
 
         /**
          * @fn  void Sampler::setFilter(FilterOptions minFilter,
@@ -212,62 +247,68 @@ namespace Tiny3D
          * @param   magFilter   A filter specifying the magnitude.
          * @param   mipFilter   A filter specifying the mip.
          */
-        virtual void setFilter(FilterOptions minFilter, FilterOptions magFilter,
-            FilterOptions mipFilter) = 0;
+        void setFilter(FilterOptions minFilter, FilterOptions magFilter,
+            FilterOptions mipFilter);
 
-        /**
-         * @fn  void Sampler::setFilter(FilterType type);
-         * @brief   Sets a filter
-         * @param   type    The type.
-         */
-        virtual void setFilter(TexFilterOptions type) = 0;
+        void getFilter(FilterOptions& minFilter, FilterOptions& magFilter,
+            FilterOptions& mipFilter);
 
         /**
          * @fn  CompareFunction Sampler::getCompareFunction() const;
          * @brief   Gets compare function
          * @return  The compare function.
          */
-        virtual CompareFunction getCompareFunction() const = 0;
+        CompareFunction getCompareFunction() const;
 
         /**
          * @fn  void Sampler::setCompareFunction(CompareFunction func);
          * @brief   Sets compare function
          * @param   func    The function.
          */
-        virtual void setCompareFunction(CompareFunction func) = 0;
+        void setCompareFunction(CompareFunction func);
 
         /**
          * @fn  uint32_t Sampler::getAnisotropy() const;
          * @brief   Gets the anisotropy
          * @return  The anisotropy.
          */
-        virtual uint32_t getAnisotropy() const = 0;
+        uint32_t getAnisotropy() const;
 
         /**
          * @fn  void Sampler::setAnisotropy(uint32_t aniso);
          * @brief   Sets an anisotropy
          * @param   aniso   The aniso.
          */
-        virtual void setAnisotropy(uint32_t aniso) = 0;
+        void setAnisotropy(uint32_t aniso);
 
         /**
          * @fn  Real Sampler::getMipmapBias() const;
          * @brief   Gets mipmap bias
          * @return  The mipmap bias.
          */
-        virtual Real getMipmapBias() const = 0;
+        Real getMipmapBias() const;
 
         /**
          * @fn  void Sampler::setMipmapBias(Real bias);
          * @brief   Sets mipmap bias
          * @param   bias    The bias.
          */
-        virtual void setMipmapBias(Real bias) = 0;
+        void setMipmapBias(Real bias);
 
     protected:
-        HWSamplerState();
+        UVWAddressMode  mAddressMode;   /**< The address mode */
+        ColorRGBA       mBorderColor;   /**< The border color */
+        FilterOptions   mMinFilter;     /**< A filter specifying the minimum */
+        FilterOptions   mMagFilter;     /**< A filter specifying the magnitude */
+        FilterOptions   mMipFilter;     /**< A filter specifying the mip */
+        CompareFunction mCompareFunc;   /**< The compare function */
+        uint32_t        mAnisotropy;    /**< The anisotropy */
+        Real            mMipmapBias;    /**< The mipmap bias */
+        bool            mIsDirty;       /**< True if is dirty, false if not */
     };
 }
+
+#include "T3DRenderState.inl"
 
 
 #endif  /*__T3D_RENDER_STATE_H__*/
