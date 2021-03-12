@@ -23,7 +23,11 @@ namespace Tiny3D
 
     inline void BlendState::setAlpha2CoverageEnabled(bool enabled)
     {
-        mAlphaToCoverageEnable = enabled;
+        if (mAlphaToCoverageEnable != enabled)
+        {
+            mAlphaToCoverageEnable = enabled;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -37,7 +41,11 @@ namespace Tiny3D
 
     inline void BlendState::setIndependentBlendEnabled(bool enabled)
     {
-        mIndependentBlendEnable = enabled;
+        if (mIndependentBlendEnable != enabled)
+        {
+            mIndependentBlendEnable = enabled;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -52,12 +60,16 @@ namespace Tiny3D
     inline void BlendState::setBlendEnabled(int32_t idx, bool enabled)
     {
         T3D_ASSERT(idx >= 0 && idx < MAX_RENDER_TARGET);
-        mRenderTargetState[idx].mBlendEnable = enabled;
+        if (mRenderTargetState[idx].mBlendEnable != enabled)
+        {
+            mRenderTargetState[idx].mBlendEnable = enabled;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
 
-    inline bool BlendState::isBlendEnabled(int32_t idx)
+    inline bool BlendState::isBlendEnabled(int32_t idx) const
     {
         T3D_ASSERT(idx >= 0 && idx < MAX_RENDER_TARGET);
         return mRenderTargetState[idx].mBlendEnable;
@@ -68,7 +80,12 @@ namespace Tiny3D
     inline void BlendState::setSrcBlend(int32_t idx, BlendFactor factor)
     {
         T3D_ASSERT(idx >= 0 && idx < MAX_RENDER_TARGET);
-        mRenderTargetState[idx].mSrcBlend = factor;
+        if (mRenderTargetState[idx].mSrcBlend != factor)
+        {
+            mRenderTargetState[idx].mSrcBlend = factor;
+            mIsDirty = true;
+        }
+        
     }
 
     //--------------------------------------------------------------------------
@@ -84,7 +101,11 @@ namespace Tiny3D
     inline void BlendState::setDstBlend(int32_t idx, BlendFactor factor)
     {
         T3D_ASSERT(idx >= 0 && idx < MAX_RENDER_TARGET);
-        mRenderTargetState[idx].mDestBlend = factor;
+        if (mRenderTargetState[idx].mDestBlend != factor)
+        {
+            mRenderTargetState[idx].mDestBlend = factor;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -100,7 +121,11 @@ namespace Tiny3D
     inline void BlendState::setBlendOp(int32_t idx, BlendOperation op)
     {
         T3D_ASSERT(idx >= 0 && idx < MAX_RENDER_TARGET);
-        mRenderTargetState[idx].mBlendOp = op;
+        if (mRenderTargetState[idx].mBlendOp != op)
+        {
+            mRenderTargetState[idx].mBlendOp = op;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -116,7 +141,11 @@ namespace Tiny3D
     inline void BlendState::setSrcBlendAlpha(int32_t idx, BlendFactor factor)
     {
         T3D_ASSERT(idx >= 0 && idx < MAX_RENDER_TARGET);
-        mRenderTargetState[idx].mSrcBlendAlpha = factor;
+        if (mRenderTargetState[idx].mSrcBlendAlpha != factor)
+        {
+            mRenderTargetState[idx].mSrcBlendAlpha = factor;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -132,7 +161,11 @@ namespace Tiny3D
     inline void BlendState::setDstBlendAlpha(int32_t idx, BlendFactor factor)
     {
         T3D_ASSERT(idx >= 0 && idx < MAX_RENDER_TARGET);
-        mRenderTargetState[idx].mDestBlendAlpha = factor;
+        if (mRenderTargetState[idx].mDestBlendAlpha != factor)
+        {
+            mRenderTargetState[idx].mDestBlendAlpha = factor;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -148,7 +181,11 @@ namespace Tiny3D
     inline void BlendState::setBlendOpAlpha(int32_t idx, BlendOperation op)
     {
         T3D_ASSERT(idx >= 0 && idx < MAX_RENDER_TARGET);
-        mRenderTargetState[idx].mBlendOpAlpha = op;
+        if (mRenderTargetState[idx].mBlendOpAlpha != op)
+        {
+            mRenderTargetState[idx].mBlendOpAlpha = op;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -163,7 +200,11 @@ namespace Tiny3D
 
     inline void DepthStencilState::setDepthTestEnabled(bool enabled)
     {
-        mDepthTestEnable = enabled;
+        if (mDepthTestEnable != enabled)
+        {
+            mDepthTestEnable = enabled;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -177,7 +218,11 @@ namespace Tiny3D
 
     inline void DepthStencilState::setDepthWriteEnabled(bool enabled)
     {
-        mDepthWriteEnable = enabled;
+        if (mDepthWriteEnable != enabled)
+        {
+            mDepthWriteEnable = enabled;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -189,9 +234,29 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
+    inline void DepthStencilState::setDepthWriteMask(DepthWriteMask mask)
+    {
+        if (mDepthWriteMask != mask)
+        {
+            mDepthWriteMask = mask;
+            mIsDirty = true;
+        }
+    }
+
+    inline DepthWriteMask DepthStencilState::getDepthWriteMask() const
+    {
+        return mDepthWriteMask;
+    }
+
+    //--------------------------------------------------------------------------
+
     inline void DepthStencilState::setDepthFunction(CompareFunction func)
     {
-        mDepthFunc = func;
+        if (mDepthFunc != func)
+        {
+            mDepthFunc = func;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -205,7 +270,11 @@ namespace Tiny3D
 
     inline void DepthStencilState::setStencilEnabled(bool enabled)
     {
-        mStencilEnable = enabled;
+        if (mStencilEnable != enabled)
+        {
+            mStencilEnable = enabled;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -219,7 +288,11 @@ namespace Tiny3D
 
     inline void DepthStencilState::setStencilReadMask(uint8_t mask)
     {
-        mStencilReadMask = mask;
+        if (mStencilReadMask != mask)
+        {
+            mStencilReadMask = mask;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -233,7 +306,11 @@ namespace Tiny3D
 
     inline void DepthStencilState::setStencilWriteMask(uint8_t mask)
     {
-        mStencilWriteMask = mask;
+        if (mStencilWriteMask != mask)
+        {
+            mStencilWriteMask = mask;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -247,7 +324,11 @@ namespace Tiny3D
 
     inline void DepthStencilState::setStencilRef(uint8_t ref)
     {
-        mStencilRef = ref;
+        if (mStencilRef != ref)
+        {
+            mStencilRef = ref;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -261,7 +342,11 @@ namespace Tiny3D
 
     inline void DepthStencilState::setStencilFunction(CompareFunction func)
     {
-        mStencilFunc = func;
+        if (mStencilFunc != func)
+        {
+            mStencilFunc = func;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -276,16 +361,35 @@ namespace Tiny3D
     inline void DepthStencilState::setStencilOp(
         StencilOp stencilFail, StencilOp depthFail, StencilOp pass)
     {
-        mStencilFailOp = stencilFail;
-        mDepthFailOp = depthFail;
-        mStencilPassOp = pass;
+        if (mStencilFailOp != stencilFail || mDepthFailOp != depthFail
+            || mStencilPassOp != pass)
+        {
+            mStencilFailOp = stencilFail;
+            mDepthFailOp = depthFail;
+            mStencilPassOp = pass;
+            mIsDirty = true;
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    inline void DepthStencilState::getStencilOp(StencilOp& stencilFail,
+        StencilOp& depthFail, StencilOp& pass) const
+    {
+        stencilFail = mStencilFailOp;
+        depthFail = mDepthFailOp;
+        pass = mStencilPassOp;
     }
 
     //--------------------------------------------------------------------------
 
     inline void RasterizerState::setPolygonMode(PolygonMode mode)
     {
-        mPolygonMode = mode;
+        if (mPolygonMode != mode)
+        {
+            mPolygonMode = mode;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -299,7 +403,11 @@ namespace Tiny3D
 
     inline void RasterizerState::setCullingMode(CullingMode mode)
     {
-        mCullingMode = mode;
+        if (mCullingMode != mode)
+        {
+            mCullingMode = mode;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -311,23 +419,13 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
-    inline void RasterizerState::setManualCullingMode(ManualCullingMode mode)
-    {
-        mManualCullingMode = mode;
-    }
-
-    //--------------------------------------------------------------------------
-
-    inline ManualCullingMode RasterizerState::getManualCullingMode() const
-    {
-        return mManualCullingMode;
-    }
-
-    //--------------------------------------------------------------------------
-
     inline void RasterizerState::setDepthBias(int32_t bias)
     {
-        mDepthBias = bias;
+        if (mDepthBias != bias)
+        {
+            mDepthBias = bias;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -341,7 +439,11 @@ namespace Tiny3D
 
     inline void RasterizerState::setDepthBiasClamp(Real clamp)
     {
-        mDepthBiasClamp = clamp;
+        if (mDepthBiasClamp != clamp)
+        {
+            mDepthBiasClamp = clamp;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -355,7 +457,11 @@ namespace Tiny3D
 
     inline void RasterizerState::setSlopeScaledDepthBias(Real slope)
     {
-        mSlopeScaledDepthBias = slope;
+        if (mSlopeScaledDepthBias != slope)
+        {
+            mSlopeScaledDepthBias = slope;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -369,7 +475,11 @@ namespace Tiny3D
 
     inline void RasterizerState::setDepthClipEnabled(bool enabled)
     {
-        mDepthClipEnable = enabled;
+        if (mDepthClipEnable != enabled)
+        {
+            mDepthClipEnable = enabled;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -383,7 +493,11 @@ namespace Tiny3D
 
     inline void RasterizerState::setScissorEnabled(bool enabled)
     {
-        mScissorEnable = enabled;
+        if (mScissorEnable != enabled)
+        {
+            mScissorEnable = enabled;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -397,7 +511,11 @@ namespace Tiny3D
 
     inline void RasterizerState::setMSAAEnabled(bool enabled)
     {
-        mMSAAEnable = enabled;
+        if (mMSAAEnable != enabled)
+        {
+            mMSAAEnable = enabled;
+            mIsDirty = true;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -507,11 +625,11 @@ namespace Tiny3D
     //--------------------------------------------------------------------------
 
     inline void SamplerState::getFilter(FilterOptions& minFilter,
-        FilterOptions& magFilter, FilterOptions& mipFilter)
+        FilterOptions& magFilter, FilterOptions& mipFilter) const
     {
         minFilter = mMinFilter;
         magFilter = mMagFilter;
-        mMipFilter = mMipFilter;
+        mipFilter = mMipFilter;
     }
 
     //--------------------------------------------------------------------------

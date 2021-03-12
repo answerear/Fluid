@@ -318,6 +318,66 @@ namespace Tiny3D
         PolygonMode getPolygonMode() const;
 
         /**
+         * @brief 创建渲染相关的混合状态对象
+         * @return 成功返回平台相关的渲染状态对象
+         * @see class BlendState
+         */
+        virtual BlendStatePtr createBlendState() = 0;
+
+        /**
+         * @brief 创建渲染相关的深度缓冲和模板缓冲状态
+         * @return 成功返回平台相关的渲染状态对象
+         * @see class DepthStencilState
+         */
+        virtual DepthStencilStatePtr createDepthStencilState() = 0;
+
+        /**
+         * @brief 创建渲染相关的光栅化状态
+         * @return 成功返回平台相关的渲染状态对象
+         * @see class RasterizerState
+         */
+        virtual RasterizerStatePtr createRasterizerState() = 0;
+
+        /**
+         * @brief 创建渲染相关的纹理采样状态
+         * @return 成功返回平台相关的渲染状态对象
+         * @see class SamplerState
+         */
+        virtual SamplerStatePtr createSamplerState() = 0;
+
+        /**
+         * @brief 设置混合渲染状态
+         * @param [in] state : 混合状态对象
+         * @return 成功返回 T3D_OK
+         * @see class BlendState
+         */
+        TResult setBlendState(BlendStatePtr state);
+
+        /**
+         * @brief 设置深度缓冲和模板缓冲状态
+         * @param [in] state : 深度缓冲和模板缓冲状态对象
+         * @return 成功返回 T3D_OK
+         * @see class DepthStencilState
+         */
+        TResult setDepthStencilState(DepthStencilStatePtr state);
+
+        /**
+         * @brief 设置光栅化状态
+         * @param [in] state : 光栅化状态对象
+         * @return 成功返回 T3D_OK
+         * @see class RasterizerState
+         */
+        TResult setRasterizerState(RasterizerStatePtr state);
+
+        /**
+         * @brief 设置纹理采样状态
+         * @param [in] state : 纹理采样状态对象
+         * @return 成功返回 T3D_OK
+         * @see class SamplerState
+         */
+        TResult setSamplerState(SamplerStatePtr state);
+
+        /**
          * @fn  virtual TResult Renderer::setViewport(ViewportPtr viewport) = 0;
          * @brief   设置渲染视口
          * @param   viewport    The viewport.
@@ -473,14 +533,16 @@ namespace Tiny3D
 
         RenderTargetList        mRenderTargets;     /**< 渲染目标列表 */
 
-        RenderCapabilitiesPtr mCapabilities;      /**< 渲染能力值 */
+        RenderCapabilitiesPtr   mCapabilities;      /**< 渲染能力值 */
         RenderWindowPtr         mPrimaryWindow;     /**< 主窗口 */
         RenderTargetPtr         mRenderTarget;      /**< 当前渲染目标 */
         
-        ViewportPtr             mViewport;          /**< 当前渲染视口对象 */
+        BlendStatePtr           mBState;            /**< 混合状态 */
+        DepthStencilStatePtr    mDSState;           /**< 深度缓冲和模板缓冲状态 */
+        RasterizerStatePtr      mRState;            /**< 光栅化状态 */
+        SamplerStatePtr         mSState;            /**< 纹理采样状态 */
 
-        CullingMode             mCullingMode;       /**< 面剔除模式 */
-        PolygonMode             mPolygonMode;       /**< 多边形渲染模式 */
+        ViewportPtr             mViewport;          /**< 当前渲染视口对象 */
     };
 }
 

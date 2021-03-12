@@ -31,6 +31,7 @@
 #include "T3DD3D11VertexDeclaration.h"
 #include "T3DD3D11Capabilities.h"
 #include "T3DD3D11Sampler.h"
+#include "T3DD3D11State.h"
 
 
 namespace Tiny3D
@@ -55,13 +56,10 @@ namespace Tiny3D
         : mInstance(nullptr)
         , mD3DDevice(nullptr)
         , mD3DDeviceContext(nullptr)
-        , mD3DRState(nullptr)
         , mFeatureLevel(D3D_FEATURE_LEVEL_10_0)
         , mVendorID(0)
-        , mIsRSStateDirty(false)
     {
         mName = RenderContext::DIRECT3D11;
-        memset(&mD3DRSDesc, 0, sizeof(mD3DRSDesc));
     }
 
     //--------------------------------------------------------------------------
@@ -116,15 +114,6 @@ namespace Tiny3D
 
             mFeatureLevel = level;
 
-            // Raster State
-            ret = initD3DRasterizerState();
-            if (T3D_FAILED(ret))
-            {
-                T3D_LOG_ERROR(LOG_TAG_D3D11RENDERER,
-                    "Initialize D3D11 Rasterizer State failed !");
-                break;
-            }
-
             // 收集硬件和驱动信息
             ret = collectInformation();
             if (T3D_FAILED(ret))
@@ -159,7 +148,6 @@ namespace Tiny3D
             mPrimaryWindow = nullptr;
             mHardwareBufferMgr = nullptr;
 
-            D3D_SAFE_RELEASE(mD3DRState);
             D3D_SAFE_RELEASE(mD3DDeviceContext);
             D3D_SAFE_RELEASE(mD3DDevice);
         } while (0);
@@ -499,9 +487,9 @@ namespace Tiny3D
 
     TResult D3D11Context::setCullingMode(CullingMode mode)
     {
-        mD3DRSDesc.CullMode = D3D11Mappings::get(mode);
-        mCullingMode = mode;
-        mIsRSStateDirty = true;
+//         mD3DRSDesc.CullMode = D3D11Mappings::get(mode);
+//         mCullingMode = mode;
+//         mIsRSStateDirty = true;
         return T3D_OK;
     }
 
@@ -509,10 +497,38 @@ namespace Tiny3D
 
     TResult D3D11Context::setPolygonMode(PolygonMode mode)
     {
-        mD3DRSDesc.FillMode = D3D11Mappings::get(mode);
-        mPolygonMode = mode;
-        mIsRSStateDirty = true;
+//         mD3DRSDesc.FillMode = D3D11Mappings::get(mode);
+//         mPolygonMode = mode;
+//         mIsRSStateDirty = true;
         return T3D_OK;
+    }
+
+    //--------------------------------------------------------------------------
+
+    BlendStatePtr D3D11Context::createBlendState()
+    {
+        return D3D11BlendState::create();
+    }
+
+    //--------------------------------------------------------------------------
+
+    DepthStencilStatePtr D3D11Context::createDepthStencilState()
+    {
+        return D3D11DepthStencilState::create();
+    }
+
+    //--------------------------------------------------------------------------
+
+    RasterizerStatePtr D3D11Context::createRasterizerState()
+    {
+        return D3D11RasterizerState::create();
+    }
+
+    //--------------------------------------------------------------------------
+
+    SamplerStatePtr D3D11Context::createSamplerState()
+    {
+        return D3D11SamplerState::create();
     }
 
     //--------------------------------------------------------------------------
@@ -653,12 +669,20 @@ namespace Tiny3D
             mIsViewMatrixDirty = false;
             mIsProjMatrixDirty = false;
 
-            // 按需更新光栅化状态
-            if (mIsRSStateDirty)
-            {
-                updateD3DRasterizerState();
-                mIsRSStateDirty = false;
-            }
+            D3D11BlendStatePtr d3dBState = smart_pointer_cast<D3D11BlendState>(mBState);
+            ret = d3dBState->update(mD3DDevice);
+
+            D3D11DepthStencilStatePtr d3dDSState
+                = smart_pointer_cast<D3D11DepthStencilState>(mDSState);
+            ret = d3dDSState->update(mD3DDevice);
+
+            D3D11RasterizerStatePtr d3dRState
+                = smart_pointer_cast<D3D11RasterizerState>(mRState);
+            ret = d3dRState->update(mD3DDevice);
+
+            D3D11SamplerStatePtr d3dSState
+                = smart_pointer_cast<D3D11SamplerState>(mSState);
+            ret = d3dSState->update(mD3DDevice);
 
             D3D11VertexArrayObjectPtr d3dVAO 
                 = smart_pointer_cast<D3D11VertexArrayObject>(vao);
@@ -698,74 +722,6 @@ namespace Tiny3D
                 // 绘制
                 mD3DDeviceContext->Draw((UINT)d3dVAO->getVertexCount(), 0);
             }
-        } while (0);
-
-        return ret;
-    }
-
-    //--------------------------------------------------------------------------
-
-    TResult D3D11Context::initD3DRasterizerState()
-    {
-        TResult ret = T3D_OK;
-
-        do 
-        {
-            D3D_SAFE_RELEASE(mD3DRState);
-
-            HRESULT hr = S_OK;
-
-            memset(&mD3DRSDesc, 0, sizeof(mD3DRSDesc));
-            mD3DRSDesc.FillMode = D3D11Mappings::get(mPolygonMode);
-            mD3DRSDesc.CullMode = D3D11Mappings::get(mCullingMode);
-            mD3DRSDesc.FrontCounterClockwise = TRUE;
-            mD3DRSDesc.DepthBias = 0;
-            mD3DRSDesc.SlopeScaledDepthBias = 0.0f;
-            mD3DRSDesc.DepthBiasClamp = 0.0f;
-            mD3DRSDesc.DepthClipEnable = TRUE;
-            mD3DRSDesc.ScissorEnable = FALSE;
-            mD3DRSDesc.MultisampleEnable = FALSE;
-            mD3DRSDesc.AntialiasedLineEnable = FALSE;
-
-            hr = mD3DDevice->CreateRasterizerState(&mD3DRSDesc, &mD3DRState);
-            if (FAILED(hr))
-            {
-                ret = T3D_ERR_D3D11_CREATE_FAILED;
-                T3D_LOG_ERROR(LOG_TAG_D3D11RENDERER,
-                    "Create ID3D11RasterizerState object failed ! DX ERROR : %d",
-                    hr);
-                break;
-            }
-
-            mD3DDeviceContext->RSSetState(mD3DRState);
-        } while (0);
-
-        return ret;
-    }
-
-    //--------------------------------------------------------------------------
-
-    TResult D3D11Context::updateD3DRasterizerState()
-    {
-        TResult ret = T3D_OK;
-
-        do 
-        {
-            D3D_SAFE_RELEASE(mD3DRState);
-
-            HRESULT hr = S_OK;
-
-            hr = mD3DDevice->CreateRasterizerState(&mD3DRSDesc, &mD3DRState);
-            if (FAILED(hr))
-            {
-                ret = T3D_ERR_D3D11_CREATE_FAILED;
-                T3D_LOG_ERROR(LOG_TAG_D3D11RENDERER,
-                    "Create ID3D11RasterizerState object failed ! DX ERROR : %d",
-                    hr);
-                break;
-            }
-
-            mD3DDeviceContext->RSSetState(mD3DRState);
         } while (0);
 
         return ret;

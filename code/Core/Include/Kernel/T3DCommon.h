@@ -259,6 +259,12 @@ namespace Tiny3D
         {}
     };
 
+    enum class DepthWriteMask : uint32_t
+    {
+        ZERO = 0,
+        ALL = 1
+    };
+
     /**
      * @enum    WaveformType
      * @brief   Values that represent waveform types

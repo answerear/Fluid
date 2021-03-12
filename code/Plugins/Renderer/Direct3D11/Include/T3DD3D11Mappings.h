@@ -148,6 +148,22 @@ namespace Tiny3D
          * @returns 返回 D3D11 对应的比较函数值
          */
         static D3D11_COMPARISON_FUNC get(CompareFunction func);
+
+        static D3D11_BLEND get(BlendFactor factor);
+
+        static D3D11_BLEND_OP get(BlendOperation op);
+
+        static D3D11_DEPTH_WRITE_MASK get(DepthWriteMask mask);
+
+        static D3D11_STENCIL_OP get(StencilOp op);
+
+        static void get(D3D11_BLEND_DESC &desc, const BlendState &state);
+
+        static void get(D3D11_DEPTH_STENCIL_DESC  &desc, const DepthStencilState &state);
+
+        static void get(D3D11_RASTERIZER_DESC &desc, const RasterizerState &state);
+
+        static void get(D3D11_SAMPLER_DESC  &desc, const SamplerState &state);
     };
 }
 

@@ -25,16 +25,8 @@ namespace Tiny3D
 {
     //--------------------------------------------------------------------------
 
-    BlendStatePtr BlendState::create()
-    {
-        BlendStatePtr state = new BlendState();
-        state->release();
-        return state;
-    }
-
-    //--------------------------------------------------------------------------
-
     BlendState::BlendState()
+        : mIsDirty(false)
     {
 
     }
@@ -48,16 +40,8 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
-    DepthStencilStatePtr DepthStencilState::create()
-    {
-        DepthStencilStatePtr state = new DepthStencilState();
-        state->release();
-        return state;
-    }
-
-    //--------------------------------------------------------------------------
-
     DepthStencilState::DepthStencilState()
+        : mIsDirty(false)
     {
 
     }
@@ -71,16 +55,8 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
-    RasterizerStatePtr RasterizerState::create()
-    {
-        RasterizerStatePtr state = new RasterizerState();
-        state->release();
-        return state;
-    }
-
-    //--------------------------------------------------------------------------
-
     RasterizerState::RasterizerState()
+        : mIsDirty(false)
     {
 
     }
@@ -94,16 +70,8 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
-    SamplerStatePtr SamplerState::create()
-    {
-        SamplerStatePtr state = new SamplerState();
-        state->release();
-        return state;
-    }
-
-    //--------------------------------------------------------------------------
-
     SamplerState::SamplerState()
+        : mIsDirty(false)
     {
 
     }

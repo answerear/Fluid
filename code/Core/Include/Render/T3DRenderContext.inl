@@ -56,20 +56,6 @@ namespace Tiny3D
     }
 
     //--------------------------------------------------------------------------
-
-    inline CullingMode RenderContext::getCullingMode() const
-    {
-        return mCullingMode;
-    }
-
-    //--------------------------------------------------------------------------
-
-    inline PolygonMode RenderContext::getPolygonMode() const
-    {
-        return mPolygonMode;
-    }
-
-    //--------------------------------------------------------------------------
 // 
 //     inline HardwareConstantBufferPtr Renderer::getConstantBuffer(size_t slot) const
 //     {

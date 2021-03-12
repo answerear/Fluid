@@ -33,9 +33,11 @@ namespace Tiny3D
     class T3D_ENGINE_API BlendState : public Object
     {
     public:
-        static BlendStatePtr create();
+        enum
+        {
+            MAX_RENDER_TARGET = 8
+        };
 
-        BlendState();
         virtual ~BlendState();
 
         void setAlpha2CoverageEnabled(bool enabled);
@@ -45,7 +47,7 @@ namespace Tiny3D
         bool isIndependentBlendEnabled() const;
 
         void setBlendEnabled(int32_t idx, bool enabled);
-        bool isBlendEnabled(int32_t idx);
+        bool isBlendEnabled(int32_t idx) const;
 
         void setSrcBlend(int32_t idx, BlendFactor factor);
         BlendFactor getSrcBlend(int32_t idx) const;
@@ -66,6 +68,8 @@ namespace Tiny3D
         BlendOperation getBlendOpAlpha(int32_t idx) const;
 
     protected:
+        BlendState();
+
         struct RTBlendState
         {
             bool            mBlendEnable;
@@ -78,11 +82,7 @@ namespace Tiny3D
             uint8_t         mRenderTargetWriteMask;
         };
 
-        enum
-        {
-            MAX_RENDER_TARGET = 8
-        };
-
+        bool    mIsDirty;
         bool    mAlphaToCoverageEnable;
         bool    mIndependentBlendEnable;
 
@@ -92,9 +92,6 @@ namespace Tiny3D
     class T3D_ENGINE_API DepthStencilState : public Object
     {
     public:
-        static DepthStencilStatePtr create();
-
-        DepthStencilState();
         virtual ~DepthStencilState();
 
         void setDepthTestEnabled(bool enabled);
@@ -102,6 +99,9 @@ namespace Tiny3D
 
         void setDepthWriteEnabled(bool enabled);
         bool isDepthWriteEnabled() const;
+
+        void setDepthWriteMask(DepthWriteMask mask);
+        DepthWriteMask getDepthWriteMask() const;
 
         void setDepthFunction(CompareFunction func);
         CompareFunction getDepthFunction() const;
@@ -122,10 +122,15 @@ namespace Tiny3D
         CompareFunction getStencilFunction() const;
 
         void setStencilOp(StencilOp stencilFail, StencilOp depthFail, StencilOp pass);
+        void getStencilOp(StencilOp& stencilFail, StencilOp& depthFail, StencilOp& pass) const;
 
     protected:
+        DepthStencilState();
+
+        bool            mIsDirty;
         bool            mDepthTestEnable;
         bool            mDepthWriteEnable;
+        DepthWriteMask  mDepthWriteMask;
         CompareFunction mDepthFunc;
         bool            mStencilEnable;
         uint8_t         mStencilReadMask;
@@ -140,9 +145,6 @@ namespace Tiny3D
     class T3D_ENGINE_API RasterizerState : public Object
     {
     public:
-        static RasterizerStatePtr create();
-
-        RasterizerState();
         virtual ~RasterizerState();
 
         void setPolygonMode(PolygonMode mode);
@@ -150,9 +152,6 @@ namespace Tiny3D
 
         void setCullingMode(CullingMode mode);
         CullingMode getCullingMode() const;
-
-        void setManualCullingMode(ManualCullingMode mode);
-        ManualCullingMode getManualCullingMode() const;
 
         void setDepthBias(int32_t bias);
         int32_t getDepthBias() const;
@@ -173,24 +172,22 @@ namespace Tiny3D
         bool isMSAAEnabled() const;
 
     protected:
+        RasterizerState();
+
         PolygonMode         mPolygonMode;
         CullingMode         mCullingMode;
-        ManualCullingMode   mManualCullingMode;
         int32_t             mDepthBias;
         Real                mDepthBiasClamp;
         Real                mSlopeScaledDepthBias;
         bool                mDepthClipEnable;
         bool                mScissorEnable;
         bool                mMSAAEnable;
+        bool                mIsDirty;
     };
 
     class T3D_ENGINE_API SamplerState : public Object
     {
     public:
-        static SamplerStatePtr create();
-
-        SamplerState();
-
         virtual ~SamplerState();
 
         /**
@@ -251,7 +248,7 @@ namespace Tiny3D
             FilterOptions mipFilter);
 
         void getFilter(FilterOptions& minFilter, FilterOptions& magFilter,
-            FilterOptions& mipFilter);
+            FilterOptions& mipFilter) const;
 
         /**
          * @fn  CompareFunction Sampler::getCompareFunction() const;
@@ -296,6 +293,8 @@ namespace Tiny3D
         void setMipmapBias(Real bias);
 
     protected:
+        SamplerState();
+
         UVWAddressMode  mAddressMode;   /**< The address mode */
         ColorRGBA       mBorderColor;   /**< The border color */
         FilterOptions   mMinFilter;     /**< A filter specifying the minimum */

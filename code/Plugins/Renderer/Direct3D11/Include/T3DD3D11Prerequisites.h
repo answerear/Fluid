@@ -71,6 +71,10 @@ namespace Tiny3D
     class D3D11ShaderCreator;
     class D3D11GPUProgram;
     class D3D11GPUProgramCreator;
+    class D3D11BlendState;
+    class D3D11DepthStencilState;
+    class D3D11RasterizerState;
+    class D3D11SamplerState;
 
     T3D_DECLARE_SMART_PTR(D3D11Context);
     T3D_DECLARE_SMART_PTR(D3D11Capabilities);
@@ -91,6 +95,10 @@ namespace Tiny3D
     T3D_DECLARE_SMART_PTR(D3D11VertexShader);
     T3D_DECLARE_SMART_PTR(D3D11PixelShader);
     T3D_DECLARE_SMART_PTR(D3D11GPUProgram);
+    T3D_DECLARE_SMART_PTR(D3D11BlendState);
+    T3D_DECLARE_SMART_PTR(D3D11DepthStencilState);
+    T3D_DECLARE_SMART_PTR(D3D11RasterizerState);
+    T3D_DECLARE_SMART_PTR(D3D11SamplerState);
 }
 
 

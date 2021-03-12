@@ -37,48 +37,6 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
-    D3D11_FILL_MODE D3D11Mappings::get(PolygonMode mode)
-    {
-        D3D11_FILL_MODE d3dMode = D3D11_FILL_SOLID;
-
-        switch (mode)
-        {
-        case PolygonMode::POINT:
-        case PolygonMode::WIREFRAME:
-            d3dMode = D3D11_FILL_WIREFRAME;
-            break;
-        default:
-            d3dMode = D3D11_FILL_SOLID;
-            break;
-        }
-
-        return d3dMode;
-    }
-
-    //--------------------------------------------------------------------------
-
-    D3D11_CULL_MODE D3D11Mappings::get(CullingMode mode)
-    {
-        D3D11_CULL_MODE d3dMode = D3D11_CULL_NONE;
-
-        switch (mode)
-        {
-        case CullingMode::CLOCKWISE:
-            d3dMode = D3D11_CULL_BACK;
-            break;
-        case CullingMode::ANTICLOCKWISE:
-            d3dMode = D3D11_CULL_FRONT;
-            break;
-        default:
-            d3dMode = D3D11_CULL_NONE;
-            break;
-        }
-
-        return d3dMode;
-    }
-
-    //--------------------------------------------------------------------------
-
     const char *D3D11Mappings::get(VertexAttribute::Semantic semantic)
     {
         switch (semantic)
@@ -379,11 +337,266 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
+    D3D11_COMPARISON_FUNC D3D11Mappings::get(CompareFunction func)
+    {
+        switch (func)
+        {
+        case CompareFunction::ALWAYS_FAIL:
+            return D3D11_COMPARISON_NEVER;
+        case CompareFunction::ALWAYS_PASS:
+            return D3D11_COMPARISON_ALWAYS;
+        case CompareFunction::LESS:
+            return D3D11_COMPARISON_LESS;
+        case CompareFunction::LESS_EQUAL:
+            return D3D11_COMPARISON_LESS_EQUAL;
+        case CompareFunction::EQUAL:
+            return D3D11_COMPARISON_EQUAL;
+        case CompareFunction::NOT_EQUAL:
+            return D3D11_COMPARISON_NOT_EQUAL;
+        case CompareFunction::GREATER_EQUAL:
+            return D3D11_COMPARISON_GREATER_EQUAL;
+        case CompareFunction::GREATER:
+            return D3D11_COMPARISON_GREATER;
+        };
+
+        return D3D11_COMPARISON_ALWAYS;
+    }
+
+    //--------------------------------------------------------------------------
+
+    D3D11_BLEND D3D11Mappings::get(BlendFactor factor)
+    {
+        switch (factor)
+        {
+        case BlendFactor::ONE:
+            return D3D11_BLEND_ONE;
+        case BlendFactor::ZERO:
+            return D3D11_BLEND_ZERO;
+        case BlendFactor::DEST_COLOR:
+            return D3D11_BLEND_DEST_COLOR;
+        case BlendFactor::SOURCE_COLOR:
+            return D3D11_BLEND_SRC_COLOR;
+        case BlendFactor::ONE_MINUS_DEST_COLOR:
+            return D3D11_BLEND_INV_DEST_COLOR;
+        case BlendFactor::ONE_MINUS_SOURCE_COLOR:
+            return D3D11_BLEND_INV_SRC_COLOR;
+        case BlendFactor::DEST_ALPHA:
+            return D3D11_BLEND_DEST_ALPHA;
+        case BlendFactor::SOURCE_ALPHA:
+            return D3D11_BLEND_SRC_ALPHA;
+        case BlendFactor::ONE_MINUS_DEST_ALPHA:
+            return D3D11_BLEND_INV_DEST_ALPHA;
+        case BlendFactor::ONE_MINUS_SOURCE_ALPHA:
+            return D3D11_BLEND_INV_SRC_ALPHA;
+        }
+
+        return D3D11_BLEND_ONE;
+    }
+
+    //--------------------------------------------------------------------------
+
+    D3D11_BLEND_OP D3D11Mappings::get(BlendOperation op)
+    {
+        switch (op)
+        {
+        case BlendOperation::ADD:
+            return D3D11_BLEND_OP_ADD;
+        case BlendOperation::SUBTRACT:
+            return D3D11_BLEND_OP_SUBTRACT;
+        case BlendOperation::REVERSE_SUBTRACT:
+            return D3D11_BLEND_OP_REV_SUBTRACT;
+        case BlendOperation::MIN:
+            return D3D11_BLEND_OP_MIN;
+        case BlendOperation::MAX:
+            return D3D11_BLEND_OP_MAX;
+        }
+
+        return D3D11_BLEND_OP_ADD;
+    }
+
+    //--------------------------------------------------------------------------
+
+    void D3D11Mappings::get(D3D11_BLEND_DESC &desc, const BlendState& state)
+    {
+        desc.AlphaToCoverageEnable = state.isAlpha2CoverageEnabled() ? TRUE : FALSE;
+        desc.IndependentBlendEnable = state.isIndependentBlendEnabled();
+
+        if (desc.IndependentBlendEnable)
+        {
+            for (int32_t i = 0; i < BlendState::MAX_RENDER_TARGET; ++i)
+            {
+                desc.RenderTarget[i].BlendEnable = state.isBlendEnabled(i) ? TRUE : FALSE;
+                desc.RenderTarget[i].SrcBlend = get(state.getSrcBlend(i));
+                desc.RenderTarget[i].DestBlend = get(state.getDstBlend(i));
+                desc.RenderTarget[i].BlendOp = get(state.getBlendOp(i));
+                desc.RenderTarget[i].SrcBlendAlpha = get(state.getSrcBlendAlpha(i));
+                desc.RenderTarget[i].DestBlendAlpha = get(state.getDstBlendAlpha(i));
+                desc.RenderTarget[i].BlendOpAlpha = get(state.getBlendOpAlpha(i));
+                desc.RenderTarget[i].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+            }
+        }
+        else
+        {
+            desc.RenderTarget[0].BlendEnable = state.isBlendEnabled(0) ? TRUE : FALSE;
+            desc.RenderTarget[0].SrcBlend = get(state.getSrcBlend(0));
+            desc.RenderTarget[0].DestBlend = get(state.getDstBlend(0));
+            desc.RenderTarget[0].BlendOp = get(state.getBlendOp(0));
+            desc.RenderTarget[0].SrcBlendAlpha = get(state.getSrcBlendAlpha(0));
+            desc.RenderTarget[0].DestBlendAlpha = get(state.getDstBlendAlpha(0));
+            desc.RenderTarget[0].BlendOpAlpha = get(state.getBlendOpAlpha(0));
+            desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    D3D11_DEPTH_WRITE_MASK D3D11Mappings::get(DepthWriteMask mask)
+    {
+        switch (mask)
+        {
+        case DepthWriteMask::ZERO:
+            return D3D11_DEPTH_WRITE_MASK_ZERO;
+        case DepthWriteMask::ALL:
+            return D3D11_DEPTH_WRITE_MASK_ALL;
+        }
+
+        return D3D11_DEPTH_WRITE_MASK_ALL;
+    }
+
+    //--------------------------------------------------------------------------
+
+    D3D11_STENCIL_OP D3D11Mappings::get(StencilOp op)
+    {
+        switch (op)
+        {
+        case StencilOp::KEEP:
+            return D3D11_STENCIL_OP_KEEP;
+        case StencilOp::ZERO:
+            return D3D11_STENCIL_OP_ZERO;
+        case StencilOp::REPLACE:
+            return D3D11_STENCIL_OP_REPLACE;
+        case StencilOp::INCR:
+            return D3D11_STENCIL_OP_INCR_SAT;
+        case StencilOp::INCR_WRAP:
+            return D3D11_STENCIL_OP_INCR;
+        case StencilOp::DECR:
+            return D3D11_STENCIL_OP_DECR_SAT;
+        case StencilOp::DECR_WRAP:
+            return D3D11_STENCIL_OP_DECR;
+        case StencilOp::INVERT:
+            return D3D11_STENCIL_OP_INVERT;
+        }
+
+        return D3D11_STENCIL_OP_KEEP;
+    }
+
+    //--------------------------------------------------------------------------
+
+    void D3D11Mappings::get(D3D11_DEPTH_STENCIL_DESC &desc, const DepthStencilState& state)
+    {
+        desc.DepthEnable = state.isDepthTestEnabled() ? TRUE : FALSE;
+        desc.DepthWriteMask = get(state.getDepthWriteMask());
+        desc.DepthFunc = get(state.getDepthFunction());
+        desc.StencilEnable = state.isStencilEnabled() ? TRUE : FALSE;
+        desc.StencilReadMask = state.getStencilReadMask();
+        desc.StencilWriteMask = state.getStencilWriteMask();
+
+        StencilOp stencilFailOp, depthFailOp, passOp;
+        state.getStencilOp(stencilFailOp, depthFailOp, passOp);
+
+        desc.FrontFace.StencilFailOp = get(stencilFailOp);
+        desc.FrontFace.StencilDepthFailOp = get(depthFailOp);
+        desc.FrontFace.StencilPassOp = get(passOp);
+        desc.FrontFace.StencilFunc = get(state.getStencilFunction());
+    }
+
+    //--------------------------------------------------------------------------
+
+    D3D11_FILL_MODE D3D11Mappings::get(PolygonMode mode)
+    {
+        D3D11_FILL_MODE d3dMode = D3D11_FILL_SOLID;
+
+        switch (mode)
+        {
+        case PolygonMode::POINT:
+        case PolygonMode::WIREFRAME:
+            d3dMode = D3D11_FILL_WIREFRAME;
+            break;
+        default:
+            d3dMode = D3D11_FILL_SOLID;
+            break;
+        }
+
+        return d3dMode;
+    }
+
+    //--------------------------------------------------------------------------
+
+    D3D11_CULL_MODE D3D11Mappings::get(CullingMode mode)
+    {
+        D3D11_CULL_MODE d3dMode = D3D11_CULL_NONE;
+
+        switch (mode)
+        {
+        case CullingMode::CLOCKWISE:
+            d3dMode = D3D11_CULL_BACK;
+            break;
+        case CullingMode::ANTICLOCKWISE:
+            d3dMode = D3D11_CULL_FRONT;
+            break;
+        default:
+            d3dMode = D3D11_CULL_NONE;
+            break;
+        }
+
+        return d3dMode;
+    }
+
+    //--------------------------------------------------------------------------
+
+    void D3D11Mappings::get(D3D11_RASTERIZER_DESC &desc, const RasterizerState& state)
+    {
+        desc.FillMode = get(state.getPolygonMode());
+        desc.CullMode = get(state.getCullingMode());
+        desc.FrontCounterClockwise = TRUE;
+        desc.DepthBias = state.getDepthBias();
+        desc.DepthBiasClamp = state.getDepthBiasClamp();
+        desc.SlopeScaledDepthBias = state.getSlopeScaledDepthBias();
+        desc.DepthClipEnable = state.isDepthClipEnabled() ? TRUE : FALSE;
+        desc.ScissorEnable = state.isScissorEnabled() ? TRUE : FALSE;
+        desc.MultisampleEnable = state.isMSAAEnabled() ? TRUE : FALSE;
+        desc.AntialiasedLineEnable = FALSE;
+    }
+
+    //--------------------------------------------------------------------------
+
+    D3D11_TEXTURE_ADDRESS_MODE D3D11Mappings::get(TextureAddressMode mode)
+    {
+        if (D3D11_CONTEXT.getFeatureLevel() == D3D_FEATURE_LEVEL_9_1)
+            return D3D11_TEXTURE_ADDRESS_WRAP;
+
+        switch (mode)
+        {
+        case TextureAddressMode::WRAP:
+            return D3D11_TEXTURE_ADDRESS_WRAP;
+        case TextureAddressMode::MIRROR:
+            return D3D11_TEXTURE_ADDRESS_MIRROR;
+        case TextureAddressMode::CLAMP:
+            return D3D11_TEXTURE_ADDRESS_CLAMP;
+        case TextureAddressMode::BORDER:
+            return D3D11_TEXTURE_ADDRESS_BORDER;
+        }
+
+        return D3D11_TEXTURE_ADDRESS_WRAP;
+    }
+
+    //--------------------------------------------------------------------------
+
     D3D11_FILTER D3D11Mappings::get(FilterOptions min, FilterOptions mag,
         FilterOptions mip, bool comparison /* = false */)
     {
-        if (min == FilterOptions::ANISOTROPIC 
-            || mag == FilterOptions::ANISOTROPIC 
+        if (min == FilterOptions::ANISOTROPIC
+            || mag == FilterOptions::ANISOTROPIC
             || mip == FilterOptions::ANISOTROPIC)
             return comparison ? D3D11_FILTER_COMPARISON_ANISOTROPIC : D3D11_FILTER_ANISOTROPIC;
 
@@ -434,51 +647,25 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
-    D3D11_TEXTURE_ADDRESS_MODE D3D11Mappings::get(TextureAddressMode mode)
+    void D3D11Mappings::get(D3D11_SAMPLER_DESC &desc, const SamplerState& state)
     {
-        if (D3D11_CONTEXT.getFeatureLevel() == D3D_FEATURE_LEVEL_9_1)
-            return D3D11_TEXTURE_ADDRESS_WRAP;
+        FilterOptions minFilter, magFilter, mipFilter;
+        state.getFilter(minFilter, magFilter, mipFilter);
 
-        switch (mode)
-        {
-        case TextureAddressMode::WRAP:
-            return D3D11_TEXTURE_ADDRESS_WRAP;
-        case TextureAddressMode::MIRROR:
-            return D3D11_TEXTURE_ADDRESS_MIRROR;
-        case TextureAddressMode::CLAMP:
-            return D3D11_TEXTURE_ADDRESS_CLAMP;
-        case TextureAddressMode::BORDER:
-            return D3D11_TEXTURE_ADDRESS_BORDER;
-        }
+        const UVWAddressMode &mode = state.getAddressMode();
+        const ColorRGBA &clrBorder = state.getBorderColor();
 
-        return D3D11_TEXTURE_ADDRESS_WRAP;
-    }
-
-    //--------------------------------------------------------------------------
-
-    D3D11_COMPARISON_FUNC D3D11Mappings::get(CompareFunction func)
-    {
-        switch (func)
-        {
-        case CompareFunction::ALWAYS_FAIL:
-            return D3D11_COMPARISON_NEVER;
-        case CompareFunction::ALWAYS_PASS:
-            return D3D11_COMPARISON_ALWAYS;
-        case CompareFunction::LESS:
-            return D3D11_COMPARISON_LESS;
-        case CompareFunction::LESS_EQUAL:
-            return D3D11_COMPARISON_LESS_EQUAL;
-        case CompareFunction::EQUAL:
-            return D3D11_COMPARISON_EQUAL;
-        case CompareFunction::NOT_EQUAL:
-            return D3D11_COMPARISON_NOT_EQUAL;
-        case CompareFunction::GREATER_EQUAL:
-            return D3D11_COMPARISON_GREATER_EQUAL;
-        case CompareFunction::GREATER:
-            return D3D11_COMPARISON_GREATER;
-        };
-
-        return D3D11_COMPARISON_ALWAYS;
+        desc.Filter = get(minFilter, magFilter, mipFilter);
+        desc.AddressU = get(mode.u);
+        desc.AddressV = get(mode.v);
+        desc.AddressW = get(mode.w);
+        desc.MipLODBias = state.getMipmapBias();
+        desc.MaxAnisotropy = state.getAnisotropy();
+        desc.ComparisonFunc = get(state.getCompareFunction());
+        desc.BorderColor[0] = clrBorder.red();
+        desc.BorderColor[1] = clrBorder.green();
+        desc.BorderColor[2] = clrBorder.blue();
+        desc.BorderColor[3] = clrBorder.alpha();
     }
 }
 

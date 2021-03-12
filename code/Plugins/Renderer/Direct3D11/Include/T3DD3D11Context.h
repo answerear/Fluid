@@ -159,6 +159,34 @@ namespace Tiny3D
         virtual TResult setPolygonMode(PolygonMode mode) override;
 
         /**
+         * @brief 创建渲染相关的混合状态对象
+         * @return 成功返回平台相关的渲染状态对象
+         * @see class BlendState
+         */
+        virtual BlendStatePtr createBlendState() override;
+
+        /**
+         * @brief 创建渲染相关的深度缓冲和模板缓冲状态
+         * @return 成功返回平台相关的渲染状态对象
+         * @see class DepthStencilState
+         */
+        virtual DepthStencilStatePtr createDepthStencilState() override;
+
+        /**
+         * @brief 创建渲染相关的光栅化状态
+         * @return 成功返回平台相关的渲染状态对象
+         * @see class RasterizerState
+         */
+        virtual RasterizerStatePtr createRasterizerState() override;
+
+        /**
+         * @brief 创建渲染相关的纹理采样状态
+         * @return 成功返回平台相关的渲染状态对象
+         * @see class SamplerState
+         */
+        virtual SamplerStatePtr createSamplerState() override;
+
+        /**
          * @fn  virtual TResult setViewport(ViewportPtr viewport) override;
          * @brief   设置渲染视口
          * @param   viewport    The viewport.
@@ -250,20 +278,6 @@ namespace Tiny3D
         D3D11Context();
 
         /**
-         * @fn  TResult initD3DRasterizerState();
-         * @brief   初始化光栅化状态
-         * @return  调用成功返回 T3D_OK.
-         */
-        TResult initD3DRasterizerState();
-
-        /**
-         * @fn  TResult updateD3DRasterizerState();
-         * @brief   更新光栅化状态
-         * @return  调用成功返回 T3D_OK.
-         */
-        TResult updateD3DRasterizerState();
-
-        /**
          * @fn  TResult collectInformation();
          * @brief   收集驱动、开发商等信息
          * @return  调用成功返回 T3D_OK.
@@ -275,11 +289,8 @@ namespace Tiny3D
 
         ID3D11Device                *mD3DDevice;        /**< D3D11 设备对象 */
         ID3D11DeviceContext         *mD3DDeviceContext; /**< D3D11 上下文对象 */
-        ID3D11RasterizerState       *mD3DRState;        /**< D3D11 光栅化状态 */
 
         D3D_FEATURE_LEVEL           mFeatureLevel;      /**< D3D 特性级别 */
-
-        D3D11_RASTERIZER_DESC       mD3DRSDesc;         /**< D3D11 光栅化状态描述结构 */
 
         HardwareBufferManagerPtr    mHardwareBufferMgr; /**< 缓冲区管理对象 */
 
@@ -288,8 +299,6 @@ namespace Tiny3D
         DriverVersion               mDriverVersion;     /**< 驱动版本号 */
         String                      mDeviceName;        /**< 设备名称 */
         uint32_t                    mVendorID;          /**< GPU 制造商ID */
-
-        bool        mIsRSStateDirty;    /**< 光栅化状态是否有改变标识 */
     };
 
     #define D3D11_CONTEXT      (D3D11Context::getInstance())

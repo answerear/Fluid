@@ -52,10 +52,11 @@ namespace Tiny3D
         , mIsProjMatrixDirty(false)
         , mPrimaryWindow(nullptr)
         , mRenderTarget(nullptr)
+        , mBState(nullptr)
+        , mDSState(nullptr)
+        , mRState(nullptr)
+        , mSState(nullptr)
         , mViewport(nullptr)
-        , mCullingMode(CullingMode::NONE)
-        , mPolygonMode(PolygonMode::SOLID)
-        
     {
 
     }
@@ -202,6 +203,38 @@ namespace Tiny3D
         }
 
         return Matrix4::IDENTITY;
+    }
+
+    //--------------------------------------------------------------------------
+
+    TResult RenderContext::setBlendState(BlendStatePtr state)
+    {
+        mBState = state;
+        return T3D_OK;
+    }
+
+    //--------------------------------------------------------------------------
+
+    TResult RenderContext::setDepthStencilState(DepthStencilStatePtr state)
+    {
+        mDSState = state;
+        return T3D_OK;
+    }
+
+    //--------------------------------------------------------------------------
+
+    TResult RenderContext::setRasterizerState(RasterizerStatePtr state)
+    {
+        mRState = state;
+        return T3D_OK;
+    }
+
+    //--------------------------------------------------------------------------
+
+    TResult RenderContext::setSamplerState(SamplerStatePtr state)
+    {
+        mSState = state;
+        return T3D_OK;
     }
 
     //--------------------------------------------------------------------------
