@@ -170,36 +170,17 @@ include(ProjectCMakeModule)
 set(SDL2DIR "${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/SDL2" CACHE PATH "SDL2 library path")
 find_package(SDL2)
 
-# Search protobuf library for all projects.
-#set(PROTOBUF_HOME "${CMAKE_CURRENT_SOURCE_DIR}/../../dependencies/protobuf" CACHE PATH "protobuf library path")
-#find_package(protobuf)
+set(GLM_HOME "${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glm" CACHE PATH "glm library path")
+find_package(glm)
 
-# Search rapidjson library for all projects.
-#set(RAPIDJSON_HOME "${CMAKE_CURRENT_SOURCE_DIR}/../../dependencies/rapidjson" CACHE PATH "rapidjson library path")
-#find_package(rapidjson)
-
-# Third Parties
-# Project protobuf
-#option (protobuf_BUILD_LITE_LIBRARIES "Build protobuf-lite library" OFF)
-#set(PROTOBUF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/protobuf/src")
-#add_subdirectory(protobuf)
-
-
-# Setup project folder
-#if (protobuf_BUILD_LITE_LIBRARIES)
-#    set_property(TARGET libprotobuf-lite PROPERTY FOLDER "ThirdParties/protobuf")
-#    set (PROTOBUF_LIBRARY libprotobuf-lite)
-#else (protobuf_BUILD_LITE_LIBRARIES)
-#    set_property(TARGET libprotobuf PROPERTY FOLDER "ThirdParties/protobuf")
-#    set_property(TARGET libprotobuf-lite PROPERTY FOLDER "ThirdParties/protobuf")
-#    set (PROTOBUF_LIBRARY libprotobuf)
-#endif (protobuf_BUILD_LITE_LIBRARIES)
-
+# Project Platform
+add_subdirectory(Platform)
 # Project Fluid
 add_subdirectory(Fluid)
 # Project PDFDemo
 add_subdirectory(PBFDemo)
 
 # Set the dependencies for all projects.
-add_dependencies(PBFDemo Fluid)
+add_dependencies(Fluid Platform)
+add_dependencies(PBFDemo Fluid Platform)
 

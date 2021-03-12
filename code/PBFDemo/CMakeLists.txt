@@ -17,6 +17,7 @@ include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/../Fluid/include"
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${SDL2_INCLUDE_DIR}"
+    "${GLM_INCLUDE_DIR}"
     )
 
 # Setup project header files

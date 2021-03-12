@@ -28,13 +28,15 @@ endif (MSVC)
 
 # Setup all cmake variables for this project.
 set(FLUID_DEP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../dependencies")
-
+set(PLATFORM_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../Platform")
 
 # Setup search header path for this project.
 include_directories(
+    "${PLATFORM_DIR}/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${SDL2_INCLUDE_DIR}"
+    "${GLM_INCLUDE_DIR}"
     )
 
 #if (FLUID_OS_WINDOWS)
@@ -103,6 +105,13 @@ if (FLUID_OS_WINDOWS)
         PATTERN "OpenGLES3" EXCLUDE
         )
 
+    add_custom_command(TARGET ${BIN_NAME}
+        PRE_LINK
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG}
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE}
+        COMMAND ${CMAKE_COMMAND} -E copy ${SDL2_BINARY} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG}
+        COMMAND ${CMAKE_COMMAND} -E copy ${SDL2_BINARY} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE}
+        )
 elseif (TINY3D_OS_MACOSX)
     # Mac OS X
 
