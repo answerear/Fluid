@@ -54,11 +54,17 @@ include_directories(
 # Setup header files for this project.
 set_project_files(Include ${CMAKE_CURRENT_SOURCE_DIR}/Include/ .h)
 #set_project_files(Include\\\\Kernel ${CMAKE_CURRENT_SOURCE_DIR}/Include/Kernel/ .h)
-
+set_project_files(Include\\\\Water ${CMAKE_CURRENT_SOURCE_DIR}/Include/Water/ .h)
+set_project_files(Include\\\\Foam ${CMAKE_CURRENT_SOURCE_DIR}/Include/Foam/ .h)
+set_project_files(Include\\\\Scene ${CMAKE_CURRENT_SOURCE_DIR}/Include/Scene/ .h)
+set_project_files(Include\\\\Solver ${CMAKE_CURRENT_SOURCE_DIR}/Include/Solver/ .h)
+set_project_files(Include\\\\PBF ${CMAKE_CURRENT_SOURCE_DIR}/Include/PBF/ .h)
 
 # Setup source files for this project.
 set_project_files(Source ${CMAKE_CURRENT_SOURCE_DIR}/Source/ .cpp)
 #set_project_files(Source\\\\Kernel ${CMAKE_CURRENT_SOURCE_DIR}/Source/Kernel/ .cpp)
+set_project_files(Source\\\\Water ${CMAKE_CURRENT_SOURCE_DIR}/Source/Water/ .cpp)
+set_project_files(Source\\\\PBF ${CMAKE_CURRENT_SOURCE_DIR}/Source/PBF/ .cpp)
 
 
 # Setup all files for building this project.
