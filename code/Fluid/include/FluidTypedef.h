@@ -17,26 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-#ifndef __FLUID_PREREQUISITES_H__
-#define __FLUID_PREREQUISITES_H__
+#ifndef __FLUIT_TYPEDEF_H__
+#define __FLUIT_TYPEDEF_H__
 
 
-#include <Tiny3D.h>
 
 
-#if defined T3DFLUID_EXPORT
-    #define FLUID_API    T3D_EXPORT_API
-#else
-    #define FLUID_API    T3D_IMPORT_API
-#endif
-
-
-using namespace Tiny3D;
-
-namespace Fluid
-{
-    struct SolverParams;
-}
-
-
-#endif  /*__FLUID_PREREQUISITES_H__*/
+#endif  /*__FLUIT_TYPEDEF_H__*/

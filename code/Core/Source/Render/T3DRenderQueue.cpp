@@ -138,7 +138,7 @@ namespace Tiny3D
                 {
                     PassPtr pass = tech->getPass(idx);
 
-                    renderer->setPolygonMode(pass->getPolygonMode());
+                    //renderer->setPolygonMode(pass->getPolygonMode());
 
                     GPUProgramPtr program = pass->getGPUProgram();
                     renderer->bindGPUProgram(program);

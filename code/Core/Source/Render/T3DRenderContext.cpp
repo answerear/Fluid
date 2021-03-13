@@ -20,8 +20,10 @@
 
 #include "Render/T3DRenderContext.h"
 #include "Render/T3DRenderCapabilities.h"
+#include "Render/T3DRenderState.h"
 #include "Resource/T3DGPUConstBufferManager.h"
 #include "Resource/T3DGPUProgramManager.h"
+
 
 
 namespace Tiny3D
@@ -322,13 +324,6 @@ namespace Tiny3D
                     "Initialize GPU built-in constant buffer with data failed !");
                 break;
             }
-
-            // 设置默认多边形渲染方式
-            setPolygonMode(PolygonMode::SOLID);
-
-            // 设置默认背面剔除顺序
-            setCullingMode(CullingMode::CLOCKWISE);
-
         } while (0);
 
         return ret;

@@ -142,23 +142,6 @@ namespace Tiny3D
             FrustumBoundPtr bound) override;
 
         /**
-         * @fn  virtual TResult setCullingMode(CullingMode mode) override;
-         * @brief   设置裁剪模式
-         * @param [in]  mode    : 裁剪模式.
-         * @return  调用成功返回 T3D_OK.
-         */
-        virtual TResult setCullingMode(CullingMode mode) override;
-
-        /**
-         * @fn  virtual TResult setPolygonMode(PolygonMode mode) override;
-         * @brief   设置渲染模式
-         * @param [in]  mode    : 渲染模式.
-         * @return  成功返回 T3D_OK.
-         * @sa  enum PolygonMode
-         */
-        virtual TResult setPolygonMode(PolygonMode mode) override;
-
-        /**
          * @brief 创建渲染相关的混合状态对象
          * @return 成功返回平台相关的渲染状态对象
          * @see class BlendState

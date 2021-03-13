@@ -485,26 +485,6 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
-    TResult D3D11Context::setCullingMode(CullingMode mode)
-    {
-//         mD3DRSDesc.CullMode = D3D11Mappings::get(mode);
-//         mCullingMode = mode;
-//         mIsRSStateDirty = true;
-        return T3D_OK;
-    }
-
-    //--------------------------------------------------------------------------
-
-    TResult D3D11Context::setPolygonMode(PolygonMode mode)
-    {
-//         mD3DRSDesc.FillMode = D3D11Mappings::get(mode);
-//         mPolygonMode = mode;
-//         mIsRSStateDirty = true;
-        return T3D_OK;
-    }
-
-    //--------------------------------------------------------------------------
-
     BlendStatePtr D3D11Context::createBlendState()
     {
         return D3D11BlendState::create();

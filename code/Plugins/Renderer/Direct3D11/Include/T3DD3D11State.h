@@ -27,7 +27,7 @@
 
 namespace Tiny3D
 {
-    class T3D_ENGINE_API D3D11BlendState : public BlendState
+    class D3D11BlendState : public BlendState
     {
     public:
         static D3D11BlendStatePtr create();
@@ -48,7 +48,7 @@ namespace Tiny3D
         ID3D11BlendState    *mD3DState;
     };
 
-    class T3D_ENGINE_API D3D11DepthStencilState : public DepthStencilState
+    class D3D11DepthStencilState : public DepthStencilState
     {
     public:
         static D3D11DepthStencilStatePtr create();
@@ -69,7 +69,7 @@ namespace Tiny3D
         ID3D11DepthStencilState     *mD3DState;
     };
 
-    class T3D_ENGINE_API D3D11RasterizerState : public RasterizerState
+    class D3D11RasterizerState : public RasterizerState
     {
     public:
         static D3D11RasterizerStatePtr create();
@@ -90,7 +90,7 @@ namespace Tiny3D
         ID3D11RasterizerState   *mD3DState;
     };
 
-    class T3D_ENGINE_API D3D11SamplerState : public SamplerState
+    class D3D11SamplerState : public SamplerState
     {
     public:
         static D3D11SamplerStatePtr create();
