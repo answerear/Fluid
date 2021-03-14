@@ -34,12 +34,7 @@ namespace Tiny3D
 
         virtual ~D3D11BlendState();
 
-        TResult update(ID3D11Device *device);
-
-        ID3D11BlendState *getD3DState()
-        {
-            return mD3DState;
-        }
+        ID3D11BlendState* getD3DState();
 
     protected:
         D3D11BlendState();
@@ -55,12 +50,7 @@ namespace Tiny3D
 
         virtual ~D3D11DepthStencilState();
 
-        TResult update(ID3D11Device *device);
-
-        ID3D11DepthStencilState *getD3DState()
-        {
-            return mD3DState;
-        }
+        ID3D11DepthStencilState* getD3DState();
 
     protected:
         D3D11DepthStencilState();
@@ -76,12 +66,7 @@ namespace Tiny3D
 
         virtual ~D3D11RasterizerState();
 
-        TResult update(ID3D11Device *device);
-
-        ID3D11RasterizerState *getD3DState()
-        {
-            return mD3DState;
-        }
+        ID3D11RasterizerState* getD3DState();
 
     protected:
         D3D11RasterizerState();
@@ -97,12 +82,7 @@ namespace Tiny3D
 
         virtual ~D3D11SamplerState();
 
-        TResult update(ID3D11Device *device);
-
-        ID3D11SamplerState *getD3DState()
-        {
-            return mD3DState;
-        }
+        ID3D11SamplerState* getD3DState();
 
     protected:
         D3D11SamplerState();

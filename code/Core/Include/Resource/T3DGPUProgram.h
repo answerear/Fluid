@@ -23,6 +23,7 @@
 
 
 #include "T3DResource.h"
+#include "Kernel/T3DCommon.h"
 
 
 namespace Tiny3D
@@ -187,21 +188,6 @@ namespace Tiny3D
 
     public:
         /**
-         * @enum    ShaderType
-         * @brief   着色器类型
-         */
-        enum ShaderType : uint32_t
-        {
-            VERTEX_SHADER = 0,  /**< 顶点着色器 */
-            HULL_SHADER,        /**< 曲面细分控制着色器 */
-            DOMAIN_SHADER,      /**< 曲面细分计算着色器 */
-            GEOMETRY_SHADER,    /**< 几何着色器 */
-            PIXEL_SHADER,       /**< 像素着色器 */
-            COMPUTE_SHADER,     /**< 计算着色器 */
-            MAX_SHADERS,
-        };
-
-        /**
          * @fn  virtual Type Shader::getType() const override;
          * @brief   获取资源类型，重写基类 Resource::getType() 接口
          * @returns The type.
@@ -281,7 +267,7 @@ namespace Tiny3D
 
         /**
          * @fn  TResult GPUProgram::addShader(const String &name, 
-         *      Shader::ShaderType type, ShaderPtr &shader);
+         *      ShaderType type, ShaderPtr &shader);
          * @brief   新增 shader
          * @param [in]  name    : Shader 名稱.
          * @param [in]  type    : Shader 類型.
@@ -289,7 +275,7 @@ namespace Tiny3D
          * @returns 調用成功返回 T3D_OK.
          */
         TResult addShader(
-            const String &name, Shader::ShaderType type, ShaderPtr &shader);
+            const String &name, ShaderType type, ShaderPtr &shader);
 
         /**
          * @fn  TResult GPUProgram::removeShader(const String &name);
@@ -300,12 +286,12 @@ namespace Tiny3D
         TResult removeShader(const String &name);
 
         /**
-         * @fn  TResult GPUProgram::removeShader(Shader::ShaderType type);
+         * @fn  TResult GPUProgram::removeShader(ShaderType type);
          * @brief   根據類型移除 shader
          * @param   type    The type.
          * @returns A TResult.
          */
-        TResult removeShader(Shader::ShaderType type);
+        TResult removeShader(ShaderType type);
 
         /**
          * @fn  ShaderPtr GPUProgram::getVertexShader() const;

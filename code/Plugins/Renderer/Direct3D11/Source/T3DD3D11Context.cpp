@@ -506,9 +506,174 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
-    SamplerStatePtr D3D11Context::createSamplerState()
+    TResult D3D11Context::createSamplerStates(size_t numOfSamplers, SamplerStatePtr* states)
     {
-        return D3D11SamplerState::create();
+        size_t i = 0;
+
+        for (i = 0; i < numOfSamplers; ++i)
+        {
+            states[i] = D3D11SamplerState::create();
+        }
+
+        return T3D_OK;
+    }
+
+    //--------------------------------------------------------------------------
+
+    TResult D3D11Context::setBlendState(BlendStatePtr state)
+    {
+        if (mD3DDeviceContext == nullptr)
+        {
+            T3D_LOG_ERROR(LOG_TAG_D3D11RENDERER,
+                "Set Blend State failed ! "
+                "Because it didn't create ID3D11DeviceContext !");
+            return T3D_ERR_SYS_NOT_INIT;
+        }
+
+        if (state == nullptr)
+        {
+            float factor[] = { 1.f, 1.f, 1.f, 1.f };
+            mD3DDeviceContext->OMSetBlendState(nullptr, factor, 0xffffffff);
+        }
+        else
+        {
+            D3D11BlendStatePtr s = smart_pointer_cast<D3D11BlendState>(state);
+            ID3D11BlendState* d3dState = s->getD3DState();
+            float factor[] = { 1.f, 1.f, 1.f, 1.f };
+            mD3DDeviceContext->OMSetBlendState(d3dState, factor, 0xffffffff);
+        }
+
+        return T3D_OK;
+    }
+
+    //--------------------------------------------------------------------------
+
+    TResult D3D11Context::setDepthStencilState(DepthStencilStatePtr state)
+    {
+        if (mD3DDeviceContext == nullptr)
+        {
+            T3D_LOG_ERROR(LOG_TAG_D3D11RENDERER,
+                "Set Blend State failed ! "
+                "Because it didn't create ID3D11DeviceContext !");
+            return T3D_ERR_SYS_NOT_INIT;
+        }
+
+        if (state == nullptr)
+        {
+            mD3DDeviceContext->OMSetDepthStencilState(nullptr, 0xffffffff);
+        }
+        else
+        {
+            D3D11DepthStencilStatePtr s 
+                = smart_pointer_cast<D3D11DepthStencilState>(state);
+            ID3D11DepthStencilState* d3dState = s->getD3DState();
+            mD3DDeviceContext->OMSetDepthStencilState(d3dState, 0xffffffff);
+        }
+
+        return T3D_OK;
+    }
+
+    //--------------------------------------------------------------------------
+
+    TResult D3D11Context::setRasterizerState(RasterizerStatePtr state)
+    {
+        if (mD3DDeviceContext == nullptr)
+        {
+            T3D_LOG_ERROR(LOG_TAG_D3D11RENDERER,
+                "Set Blend State failed ! "
+                "Because it didn't create ID3D11DeviceContext !");
+            return T3D_ERR_SYS_NOT_INIT;
+        }
+
+        if (state == nullptr)
+        {
+            mD3DDeviceContext->RSSetState(nullptr);
+        }
+        else
+        {
+            D3D11RasterizerStatePtr s 
+                = smart_pointer_cast<D3D11RasterizerState>(state);
+            ID3D11RasterizerState* d3dState = s->getD3DState();
+            mD3DDeviceContext->RSSetState(d3dState);
+        }
+
+        return T3D_OK;
+    }
+
+    //--------------------------------------------------------------------------
+
+    TResult D3D11Context::setSamplerStates(size_t numOfStates, 
+        SamplerStatePtr* states, 
+        ShaderType shader /* = ShaderType::PIXEL_SHADER */)
+    {
+        if (mD3DDeviceContext == nullptr)
+        {
+            T3D_LOG_ERROR(LOG_TAG_D3D11RENDERER,
+                "Set Blend State failed ! "
+                "Because it didn't create ID3D11DeviceContext !");
+            return T3D_ERR_SYS_NOT_INIT;
+        }
+
+        if (numOfStates == 0)
+        {
+            switch (shader)
+            {
+            case ShaderType::VERTEX_SHADER:
+                mD3DDeviceContext->VSSetSamplers(0, 0, nullptr);
+                break;
+            case ShaderType::HULL_SHADER:
+                mD3DDeviceContext->HSSetSamplers(0, 0, nullptr);
+                break;
+            case ShaderType::DOMAIN_SHADER:
+                mD3DDeviceContext->DSSetSamplers(0, 0, nullptr);
+                break;
+            case ShaderType::GEOMETRY_SHADER:
+                mD3DDeviceContext->GSSetSamplers(0, 0, nullptr);
+                break;
+            case ShaderType::PIXEL_SHADER:
+                mD3DDeviceContext->PSSetSamplers(0, 0, nullptr);
+                break;
+            case ShaderType::COMPUTE_SHADER:
+                mD3DDeviceContext->CSSetSamplers(0, 0, nullptr);
+                break;
+            }
+        }
+        else
+        {
+            size_t i = 0;
+            ID3D11SamplerState* samplers[D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT];
+
+            for (i = 0; i < numOfStates; ++i)
+            {
+                D3D11SamplerStatePtr sampler 
+                    = smart_pointer_cast<D3D11SamplerState>(states[i]);
+                samplers[i] = sampler->getD3DState();
+            }
+
+            switch (shader)
+            {
+            case ShaderType::VERTEX_SHADER:
+                mD3DDeviceContext->VSSetSamplers(0, numOfStates, samplers);
+                break;
+            case ShaderType::HULL_SHADER:
+                mD3DDeviceContext->HSSetSamplers(0, numOfStates, samplers);
+                break;
+            case ShaderType::DOMAIN_SHADER:
+                mD3DDeviceContext->DSSetSamplers(0, numOfStates, samplers);
+                break;
+            case ShaderType::GEOMETRY_SHADER:
+                mD3DDeviceContext->GSSetSamplers(0, numOfStates, samplers);
+                break;
+            case ShaderType::PIXEL_SHADER:
+                mD3DDeviceContext->PSSetSamplers(0, numOfStates, samplers);
+                break;
+            case ShaderType::COMPUTE_SHADER:
+                mD3DDeviceContext->CSSetSamplers(0, numOfStates, samplers);
+                break;
+            }
+        }
+
+        return T3D_OK;
     }
 
     //--------------------------------------------------------------------------
@@ -648,21 +813,6 @@ namespace Tiny3D
             mIsWorldMatrixDirty = false;
             mIsViewMatrixDirty = false;
             mIsProjMatrixDirty = false;
-
-            D3D11BlendStatePtr d3dBState = smart_pointer_cast<D3D11BlendState>(mBState);
-            ret = d3dBState->update(mD3DDevice);
-
-            D3D11DepthStencilStatePtr d3dDSState
-                = smart_pointer_cast<D3D11DepthStencilState>(mDSState);
-            ret = d3dDSState->update(mD3DDevice);
-
-            D3D11RasterizerStatePtr d3dRState
-                = smart_pointer_cast<D3D11RasterizerState>(mRState);
-            ret = d3dRState->update(mD3DDevice);
-
-            D3D11SamplerStatePtr d3dSState
-                = smart_pointer_cast<D3D11SamplerState>(mSState);
-            ret = d3dSState->update(mD3DDevice);
 
             D3D11VertexArrayObjectPtr d3dVAO 
                 = smart_pointer_cast<D3D11VertexArrayObject>(vao);

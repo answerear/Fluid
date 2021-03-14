@@ -265,6 +265,22 @@ namespace Tiny3D
         ALL = 1
     };
 
+
+    /**
+     * @enum    ShaderType
+     * @brief   着色器类型
+     */
+    enum class ShaderType : uint32_t
+    {
+        VERTEX_SHADER = 0,  /**< 顶点着色器 */
+        HULL_SHADER,        /**< 曲面细分控制着色器 */
+        DOMAIN_SHADER,      /**< 曲面细分计算着色器 */
+        GEOMETRY_SHADER,    /**< 几何着色器 */
+        PIXEL_SHADER,       /**< 像素着色器 */
+        COMPUTE_SHADER,     /**< 计算着色器 */
+        MAX_SHADERS,
+    };
+
     /**
      * @enum    WaveformType
      * @brief   Values that represent waveform types

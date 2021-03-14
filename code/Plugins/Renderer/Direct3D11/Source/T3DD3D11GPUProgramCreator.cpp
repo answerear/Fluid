@@ -47,7 +47,7 @@ namespace Tiny3D
     {
         va_list params;
         va_start(params, argc);
-        Shader::ShaderType shaderType = va_arg(params, Shader::ShaderType);
+        ShaderType shaderType = va_arg(params, ShaderType);
         String name = va_arg(params, char *);
         String content;
         
@@ -60,11 +60,11 @@ namespace Tiny3D
 
         ShaderPtr shader;
 
-        if (shaderType == Shader::ShaderType::VERTEX_SHADER)
+        if (shaderType == ShaderType::VERTEX_SHADER)
         {
             shader = D3D11VertexShader::create(name, content);
         }
-        else if (shaderType == Shader::ShaderType::PIXEL_SHADER)
+        else if (shaderType == ShaderType::PIXEL_SHADER)
         {
             shader = D3D11PixelShader::create(name, content);
         }

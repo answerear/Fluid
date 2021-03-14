@@ -315,10 +315,12 @@ namespace Tiny3D
 
         /**
          * @brief 创建渲染相关的纹理采样状态
-         * @return 成功返回平台相关的渲染状态对象
+         * @param [in] numOfStates : 一次创建的采样对象数量
+         * @param [in][out] states : 返回创建的采样对象数组
+         * @return 成功返回 T3D_OK
          * @see class SamplerState
          */
-        virtual SamplerStatePtr createSamplerState() = 0;
+        virtual TResult createSamplerStates(size_t numOfStates, SamplerStatePtr *states) = 0;
 
         /**
          * @brief 设置混合渲染状态
@@ -326,7 +328,7 @@ namespace Tiny3D
          * @return 成功返回 T3D_OK
          * @see class BlendState
          */
-        TResult setBlendState(BlendStatePtr state);
+        virtual TResult setBlendState(BlendStatePtr state) = 0;
 
         /**
          * @brief 设置深度缓冲和模板缓冲状态
@@ -334,7 +336,7 @@ namespace Tiny3D
          * @return 成功返回 T3D_OK
          * @see class DepthStencilState
          */
-        TResult setDepthStencilState(DepthStencilStatePtr state);
+        virtual TResult setDepthStencilState(DepthStencilStatePtr state) = 0;
 
         /**
          * @brief 设置光栅化状态
@@ -342,15 +344,18 @@ namespace Tiny3D
          * @return 成功返回 T3D_OK
          * @see class RasterizerState
          */
-        TResult setRasterizerState(RasterizerStatePtr state);
+        virtual TResult setRasterizerState(RasterizerStatePtr state) = 0;
 
         /**
          * @brief 设置纹理采样状态
-         * @param [in] state : 纹理采样状态对象
+         * @param [in] numOfSamplers : 纹理采样对象数量
+         * @param [in] states : 纹理采样状态对象数组
          * @return 成功返回 T3D_OK
          * @see class SamplerState
          */
-        TResult setSamplerState(SamplerStatePtr state);
+        virtual TResult setSamplerStates(size_t numOfStates, 
+            SamplerStatePtr *states, 
+            ShaderType shader = ShaderType::PIXEL_SHADER) = 0;
 
         /**
          * @fn  virtual TResult Renderer::setViewport(ViewportPtr viewport) = 0;
@@ -511,11 +516,6 @@ namespace Tiny3D
         RenderCapabilitiesPtr   mCapabilities;      /**< 渲染能力值 */
         RenderWindowPtr         mPrimaryWindow;     /**< 主窗口 */
         RenderTargetPtr         mRenderTarget;      /**< 当前渲染目标 */
-        
-        BlendStatePtr           mBState;            /**< 混合状态 */
-        DepthStencilStatePtr    mDSState;           /**< 深度缓冲和模板缓冲状态 */
-        RasterizerStatePtr      mRState;            /**< 光栅化状态 */
-        SamplerStatePtr         mSState;            /**< 纹理采样状态 */
 
         ViewportPtr             mViewport;          /**< 当前渲染视口对象 */
     };

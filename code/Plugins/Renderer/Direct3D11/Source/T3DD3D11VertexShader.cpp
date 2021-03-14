@@ -57,7 +57,7 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
-    Shader::ShaderType D3D11VertexShader::getShaderType() const
+    ShaderType D3D11VertexShader::getShaderType() const
     {
         return ShaderType::VERTEX_SHADER;
     }

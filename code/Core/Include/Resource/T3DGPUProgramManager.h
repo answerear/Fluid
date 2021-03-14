@@ -65,18 +65,18 @@ namespace Tiny3D
         void setShaderCreator(ShaderCreator *creator);
 
         /**
-         * @fn  virtual ShaderPtr loadShader(Shader::ShaderType shaderType, 
+         * @fn  virtual ShaderPtr loadShader(ShaderType shaderType, 
          *      const String &name);
          * @brief   加载着色器资源
          * @param [in]  shaderType  : 着色器类型.
          * @param [in]  name        : 着色器资源名称.
          * @return  返回一个着色器对象.
          */
-        virtual ShaderPtr loadShader(Shader::ShaderType shaderType, 
+        virtual ShaderPtr loadShader(ShaderType shaderType, 
             const String &name);
 
         /**
-         * @fn  virtual ShaderPtr loadShader(Shader::ShaderType shaderType, 
+         * @fn  virtual ShaderPtr loadShader(ShaderType shaderType, 
          *      const String &name, const String &content);
          * @brief   加载着色器资源
          * @param [in]  shaderType  : 着色器类型.
@@ -84,7 +84,7 @@ namespace Tiny3D
          * @param [in]  content     : 着色器程序内容.
          * @return  返回一个着色器对象.
          */
-        virtual ShaderPtr loadShader(Shader::ShaderType shaderType, 
+        virtual ShaderPtr loadShader(ShaderType shaderType, 
             const String &name, const String &content);
 
         /**

@@ -24,41 +24,41 @@ namespace Tiny3D
 
     inline ShaderPtr GPUProgram::getVertexShader() const
     {
-        return mShaders[Shader::ShaderType::VERTEX_SHADER];
+        return mShaders[(uint32_t)ShaderType::VERTEX_SHADER];
     }
 
     //--------------------------------------------------------------------------
 
     inline ShaderPtr GPUProgram::getPixelShader() const
     {
-        return mShaders[Shader::ShaderType::PIXEL_SHADER];
+        return mShaders[(uint32_t)ShaderType::PIXEL_SHADER];
     }
 
     //--------------------------------------------------------------------------
 
     inline ShaderPtr GPUProgram::getGeometryShader() const
     {
-        return mShaders[Shader::ShaderType::GEOMETRY_SHADER];
+        return mShaders[(uint32_t)ShaderType::GEOMETRY_SHADER];
     }
 
     //--------------------------------------------------------------------------
 
     inline ShaderPtr GPUProgram::getHullShader() const
     {
-        return mShaders[Shader::ShaderType::HULL_SHADER];
+        return mShaders[(uint32_t)ShaderType::HULL_SHADER];
     }
 
     //--------------------------------------------------------------------------
 
     inline ShaderPtr GPUProgram::getDomainShader() const
     {
-        return mShaders[Shader::ShaderType::DOMAIN_SHADER];
+        return mShaders[(uint32_t)ShaderType::DOMAIN_SHADER];
     }
 
     //--------------------------------------------------------------------------
 
     inline ShaderPtr GPUProgram::getComputeShader() const
     {
-        return mShaders[Shader::ShaderType::COMPUTE_SHADER];
+        return mShaders[(uint32_t)ShaderType::COMPUTE_SHADER];
     }
 }

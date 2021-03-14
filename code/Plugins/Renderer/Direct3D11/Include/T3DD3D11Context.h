@@ -164,10 +164,47 @@ namespace Tiny3D
 
         /**
          * @brief 创建渲染相关的纹理采样状态
-         * @return 成功返回平台相关的渲染状态对象
+         * @param [in] numOfStates : 一次创建的采样对象数量
+         * @param [in][out] states : 返回创建的采样对象数组
+         * @return 成功返回 T3D_OK
          * @see class SamplerState
          */
-        virtual SamplerStatePtr createSamplerState() override;
+        virtual TResult createSamplerStates(size_t numOfStates, SamplerStatePtr* states) override;
+
+        /**
+         * @brief 设置混合渲染状态
+         * @param [in] state : 混合状态对象
+         * @return 成功返回 T3D_OK
+         * @see class BlendState
+         */
+        virtual TResult setBlendState(BlendStatePtr state) override;
+
+        /**
+         * @brief 设置深度缓冲和模板缓冲状态
+         * @param [in] state : 深度缓冲和模板缓冲状态对象
+         * @return 成功返回 T3D_OK
+         * @see class DepthStencilState
+         */
+        virtual TResult setDepthStencilState(DepthStencilStatePtr state) override;
+
+        /**
+         * @brief 设置光栅化状态
+         * @param [in] state : 光栅化状态对象
+         * @return 成功返回 T3D_OK
+         * @see class RasterizerState
+         */
+        virtual TResult setRasterizerState(RasterizerStatePtr state) override;
+
+        /**
+         * @brief 设置纹理采样状态
+         * @param [in] numOfSamplers : 纹理采样对象数量
+         * @param [in] states : 纹理采样状态对象数组
+         * @return 成功返回 T3D_OK
+         * @see class SamplerState
+         */
+        virtual TResult setSamplerStates(size_t numOfStates,
+            SamplerStatePtr* states,
+            ShaderType shader = ShaderType::PIXEL_SHADER) override;
 
         /**
          * @fn  virtual TResult setViewport(ViewportPtr viewport) override;

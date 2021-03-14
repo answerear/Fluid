@@ -1781,7 +1781,7 @@ namespace Tiny3D
             const String &entry = src->entry();
             const String &stage = src->stage();
 
-            Shader::ShaderType shaderType = Shader::ShaderType::VERTEX_SHADER;
+            ShaderType shaderType = ShaderType::VERTEX_SHADER;
             size_t len = source.find_last_of('.');
             String title =
                 (len != String::npos ? source.substr(0, len) : source);
@@ -1790,26 +1790,26 @@ namespace Tiny3D
             if (stage == "vs")
             {
                 // vertex shader
-                shaderType = Shader::ShaderType::VERTEX_SHADER;
+                shaderType = ShaderType::VERTEX_SHADER;
             }
             else if (stage == "ps")
             {
                 // fragment shader
-                shaderType = Shader::ShaderType::PIXEL_SHADER;
+                shaderType = ShaderType::PIXEL_SHADER;
 
             }
             else if (stage == "gs")
             {
                 // geometry shader
-                shaderType = Shader::ShaderType::GEOMETRY_SHADER;
+                shaderType = ShaderType::GEOMETRY_SHADER;
             }
             else if (stage == "ds")
             {
-                shaderType = Shader::ShaderType::DOMAIN_SHADER;
+                shaderType = ShaderType::DOMAIN_SHADER;
             }
             else if (stage == "cs")
             {
-                shaderType = Shader::ShaderType::COMPUTE_SHADER;
+                shaderType = ShaderType::COMPUTE_SHADER;
             }
             else
             {

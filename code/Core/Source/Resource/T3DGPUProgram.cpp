@@ -187,7 +187,7 @@ namespace Tiny3D
     GPUProgram::GPUProgram(const String &name)
         : Resource(name)
     {
-        mShaders.resize(Shader::ShaderType::MAX_SHADERS, nullptr);
+        mShaders.resize((uint32_t)ShaderType::MAX_SHADERS, nullptr);
     }
 
     //--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ namespace Tiny3D
     //--------------------------------------------------------------------------
 
     TResult GPUProgram::addShader(
-        const String &name, Shader::ShaderType type, ShaderPtr &shader)
+        const String &name, ShaderType type, ShaderPtr &shader)
     {
         TResult ret = T3D_OK;
 
@@ -240,7 +240,7 @@ namespace Tiny3D
                 break;
             }
 
-            mShaders[type] = shader;
+            mShaders[(uint32_t)type] = shader;
 //             auto r = mShaders.insert(ShadersValue(type, shader));
 //             if (!r.second)
 //             {
@@ -255,7 +255,7 @@ namespace Tiny3D
 
     //--------------------------------------------------------------------------
 
-    TResult GPUProgram::removeShader(Shader::ShaderType type)
+    TResult GPUProgram::removeShader(ShaderType type)
     {
         TResult ret = T3D_OK;
 
@@ -271,7 +271,7 @@ namespace Tiny3D
 //             }
 // 
 //             mShaders.erase(itr);
-            mShaders[type] = nullptr;
+            mShaders[(uint32_t)type] = nullptr;
         } while (0);
 
         return ret;
