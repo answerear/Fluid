@@ -35,7 +35,9 @@ namespace Tiny3D
         /// 默认构造函数
         TVector3();
         /// 通过传入 X, Y, Z 构造对象
-        TVector3(T x, T y, T z);
+		TVector3(T x, T y, T z);
+        /// 通过传入 X 构造对象
+		TVector3(T x);
         /// 拷贝构造函数
         TVector3(const TVector3 &other);
 
