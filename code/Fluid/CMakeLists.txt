@@ -66,6 +66,7 @@ set_project_files(Source ${CMAKE_CURRENT_SOURCE_DIR}/Source/ .cpp)
 #set_project_files(Source\\\\Kernel ${CMAKE_CURRENT_SOURCE_DIR}/Source/Kernel/ .cpp)
 set_project_files(Source\\\\Water ${CMAKE_CURRENT_SOURCE_DIR}/Source/Water/ .cpp)
 set_project_files(Source\\\\PBF ${CMAKE_CURRENT_SOURCE_DIR}/Source/PBF/ .cpp)
+set_project_files(Source\\\\Solver ${CMAKE_CURRENT_SOURCE_DIR}/Source/Solver/ .cpp)
 
 
 # Setup all files for building this project.
