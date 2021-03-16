@@ -20,5 +20,8 @@ if (TINY3D_OS_DESKTOP)
     add_subdirectory(ScriptCompiler)
     add_subdirectory(MeshConverter)
     add_subdirectory(MetaGenerator)
+    
+    set(SPIRV_HEADERS_ENABLE_EXAMPLES OFF)
+    add_subdirectory(ShaderCross)
 endif (TINY3D_OS_DESKTOP)
 
