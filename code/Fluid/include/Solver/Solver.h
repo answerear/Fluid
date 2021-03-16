@@ -12,6 +12,8 @@ namespace Fluid
 		virtual void initialize(SolverParams* solverParam) = 0;
 		virtual void update(SolverParams* solverParam) = 0;
 
+		//void createParticles(SolverParams* solverParam);
+
 	protected:
 		// particle info
 		Vector3* mOldPos;
