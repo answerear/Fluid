@@ -262,7 +262,9 @@ add_dependencies(T3DFluid T3DCore)
 
 if (TINY3D_BUILD_TOOLS)
     add_subdirectory(Tools)
-    add_dependencies(ScriptCompiler ${PROTOBUF_LIBRARY})
+    add_dependencies(ScriptCompiler T3DCore)
+
+    add_dependencies(ShaderCross T3DCore)
 endif(TINY3D_BUILD_TOOLS)
 
 if (TINY3D_BUILD_SAMPLES)

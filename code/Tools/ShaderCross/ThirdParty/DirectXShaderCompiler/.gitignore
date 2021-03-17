@@ -55,7 +55,7 @@ autoconf/autom4te.cache
 build.x64
 build.x86
 # External projects that are tracked independently.
-external/*
+# external/*
 # Clang, which is tracked independently.
 # HLSL Change - track clang together with llvm in this git repo
 # tools/clang
