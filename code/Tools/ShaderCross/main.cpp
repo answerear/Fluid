@@ -1,4 +1,9 @@
-﻿#include <stdio.h>
+﻿
+
+// -i "$(SolutionDir)..\..\Test\Shader_hlsl.shader" -o "$(SolutionDir)..\..\Test\Shader_hlsl.json" -include "$(SolutionDir)..\..\Include"
+// -i "$(SolutionDir)..\..\Test\Shader_glsl.shader" -o "$(SolutionDir)..\..\Test\Shader_glsl.json" -include "$(SolutionDir)..\..\Include"
+
+#include <stdio.h>
 #include <string>
 #include <cstring>
 #include <fstream>
